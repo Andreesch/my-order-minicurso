@@ -18,4 +18,40 @@ public class Estabelecimento {
 
     @Column(name = "EMAIL", nullable = false)
     private String email;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public Estabelecimento setId(Integer id) {
+        this.id = id;
+        return this;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public Estabelecimento setNome(String nome) {
+        this.nome = nome;
+        return this;
+    }
+
+    public String getTelefone() {
+        return telefone;
+    }
+
+    public Estabelecimento setTelefone(String telefone) {
+        this.telefone = telefone;
+        return this;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public Estabelecimento setEmail(String email) {
+        this.email = email;
+        return this;
+    }
 }
