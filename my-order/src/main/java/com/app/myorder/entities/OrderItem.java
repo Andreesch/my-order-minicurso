@@ -10,13 +10,15 @@ public class OrderItem {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @Column(name = "ORDER", nullable = false)
-    private Order order;
+    @ManyToOne
+    @JoinColumn(name="USER_ORDER", nullable = false)
+    private UserOrder order;
 
     @Column(name = "QUANTITY", nullable = false)
     private Integer quantity;
 
-    @Column(name = "PRODUCT", nullable = false)
+    @ManyToOne
+    @JoinColumn(name="PRODUCT", nullable = false)
     private Product product;
 
     public Integer getId() {
@@ -28,11 +30,11 @@ public class OrderItem {
         return this;
     }
 
-    public Order getOrder() {
+    public UserOrder getOrder() {
         return order;
     }
 
-    public OrderItem setOrder(Order order) {
+    public OrderItem setOrder(UserOrder order) {
         this.order = order;
         return this;
     }

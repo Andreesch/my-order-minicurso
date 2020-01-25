@@ -5,8 +5,8 @@ import com.app.myorder.enums.OrderStatusEnum;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "ORDER")
-public class Order {
+@Table(name = "USER_ORDER")
+public class UserOrder {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,17 +18,19 @@ public class Order {
     @Column(name = "STATUS", nullable = false)
     private OrderStatusEnum orderStatus;
 
-    @Column(name = "USER", nullable = false)
+    @ManyToOne
+    @JoinColumn(name="USER", nullable = false)
     private User user;
 
-    @Column(name = "RESTAURANT", nullable = false)
+    @ManyToOne
+    @JoinColumn(name="RESTAURANT", nullable = false)
     private Restaurant restaurant;
 
     public Integer getId() {
         return id;
     }
 
-    public Order setId(Integer id) {
+    public UserOrder setId(Integer id) {
         this.id = id;
         return this;
     }
@@ -37,7 +39,7 @@ public class Order {
         return totalValue;
     }
 
-    public Order setTotalValue(Double totalValue) {
+    public UserOrder setTotalValue(Double totalValue) {
         this.totalValue = totalValue;
         return this;
     }
@@ -46,7 +48,7 @@ public class Order {
         return orderStatus;
     }
 
-    public Order setOrderStatus(OrderStatusEnum orderStatus) {
+    public UserOrder setOrderStatus(OrderStatusEnum orderStatus) {
         this.orderStatus = orderStatus;
         return this;
     }
@@ -55,7 +57,7 @@ public class Order {
         return user;
     }
 
-    public Order setUser(User user) {
+    public UserOrder setUser(User user) {
         this.user = user;
         return this;
     }
@@ -64,7 +66,7 @@ public class Order {
         return restaurant;
     }
 
-    public Order setRestaurant(Restaurant restaurant) {
+    public UserOrder setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
         return this;
     }

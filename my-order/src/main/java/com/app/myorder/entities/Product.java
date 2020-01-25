@@ -3,7 +3,7 @@ package com.app.myorder.entities;
 import javax.persistence.*;
 
 @Entity
-@Table(name = "PRODUTO")
+@Table(name = "PRODUCT")
 public class Product {
 
     @Id
@@ -13,10 +13,11 @@ public class Product {
     @Column(name = "NAME", nullable = false)
     private String name;
 
-    @Column(name = "VALUE")
+    @Column(name = "VALUE", nullable = false)
     private Double value;
 
-    @Column(name = "RESTAURANT")
+    @ManyToOne
+    @JoinColumn(name="RESTAURANT", nullable = false)
     private Restaurant restaurant;
 
     public Integer getId() {
