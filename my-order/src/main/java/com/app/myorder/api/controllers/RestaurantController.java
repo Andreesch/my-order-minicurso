@@ -1,9 +1,10 @@
 package com.app.myorder.api.controllers;
 
 import com.app.myorder.api.dtos.CreateRestaurantDto;
+import com.app.myorder.api.dtos.UpdateRestaurantDto;
+import com.app.myorder.services.RestaurantService;
 import io.swagger.annotations.*;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
@@ -14,10 +15,9 @@ import javax.validation.Valid;
 @RequestMapping(RestPath.BASE_PATH + "/restaurant")
 @Api(tags = "Restaurants")
 public class RestaurantController {
-    private static final Logger LOGGER = LoggerFactory.getLogger(RestaurantController.class);
 
-    //@Autowired
-    //private UserService userService;
+    @Autowired
+    private RestaurantService restaurantService;
 
     @ResponseStatus(HttpStatus.CREATED)
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
@@ -27,8 +27,21 @@ public class RestaurantController {
     })
     public CreateRestaurantDto create(
             @ApiParam(value = "${v1.restaurant}", required = true) @RequestBody @Valid CreateRestaurantDto createUserDto) {
-        //TODO
 
+        restaurantService.createRestaurant(createUserDto);
+        return new CreateRestaurantDto();
+    }
+
+    @ResponseStatus(HttpStatus.CREATED)
+    @PutMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "${v1.restaurant.update}")
+    @ApiResponses({
+            @ApiResponse(code = 201, message = "Sucesso", response = CreateRestaurantDto.class)
+    })
+    public CreateRestaurantDto update(
+            @ApiParam(value = "${v1.restaurant}", required = true) @RequestBody @Valid UpdateRestaurantDto updateUserDto) {
+
+        restaurantService.updateRestaurant(updateUserDto);
         return new CreateRestaurantDto();
     }
 }
