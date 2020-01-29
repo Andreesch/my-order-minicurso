@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
-@RestController("UserDefinitionControllerV1")
+@RestController("UserController")
 @RequestMapping(RestPath.BASE_PATH + "/users")
 @Api(tags = "Users")
 public class UserController {
