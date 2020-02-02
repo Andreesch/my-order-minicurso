@@ -2,32 +2,37 @@ package com.app.myorder.api.dtos;
 
 import io.swagger.annotations.ApiModelProperty;
 
-import javax.validation.constraints.NotEmpty;
-import javax.validation.constraints.NotNull;
+public class CreateProductResponseDto {
 
-public class CreateProductDto {
+    @ApiModelProperty(value = "${product.create.id}")
+    private Integer id;
 
-    @NotEmpty
     @ApiModelProperty(value = "${product.create.name}")
     private String name;
 
-    @NotEmpty
     @ApiModelProperty(value = "${product.create.description}")
     private String description;
 
-    @NotNull
     @ApiModelProperty(value = "${product.create.value}")
     private Double value;
 
-    @NotNull
     @ApiModelProperty(value = "${product.create.restaurantId}")
     private Integer restaurantId;
+
+    public Integer getId() {
+        return id;
+    }
+
+    public CreateProductResponseDto setId(Integer id) {
+        this.id = id;
+        return this;
+    }
 
     public String getName() {
         return name;
     }
 
-    public CreateProductDto setName(String name) {
+    public CreateProductResponseDto setName(String name) {
         this.name = name;
         return this;
     }
@@ -36,7 +41,7 @@ public class CreateProductDto {
         return description;
     }
 
-    public CreateProductDto setDescription(String description) {
+    public CreateProductResponseDto setDescription(String description) {
         this.description = description;
         return this;
     }
@@ -45,7 +50,7 @@ public class CreateProductDto {
         return value;
     }
 
-    public CreateProductDto setValue(Double value) {
+    public CreateProductResponseDto setValue(Double value) {
         this.value = value;
         return this;
     }
@@ -54,7 +59,7 @@ public class CreateProductDto {
         return restaurantId;
     }
 
-    public CreateProductDto setRestaurantId(Integer restaurantId) {
+    public CreateProductResponseDto setRestaurantId(Integer restaurantId) {
         this.restaurantId = restaurantId;
         return this;
     }

@@ -5,10 +5,10 @@ import com.app.myorder.api.dtos.CreateUserResponseDto;
 import com.app.myorder.entities.User;
 import org.modelmapper.ModelMapper;
 
-public class CreateUserMapper {
+public class UserMapper {
     private static final ModelMapper modelMapper = new ModelMapper();
 
-    private CreateUserMapper(){
+    private UserMapper(){
     };
 
     public static User toEntity(CreateUserDto createUserDto) {

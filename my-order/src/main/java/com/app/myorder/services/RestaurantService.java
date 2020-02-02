@@ -3,6 +3,7 @@ package com.app.myorder.services;
 import com.app.myorder.api.dtos.CreateRestaurantDto;
 import com.app.myorder.api.dtos.UpdateRestaurantDto;
 import com.app.myorder.entities.Restaurant;
+import com.app.myorder.exceptions.RestaurantNotFoundException;
 import com.app.myorder.repositories.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -22,12 +23,18 @@ public class RestaurantService {
     }
 
     public void updateRestaurant(UpdateRestaurantDto updateRestaurantDto) {
-        Restaurant restaurant = restaurantRepository.findById(updateRestaurantDto.getId()).get();
+        Restaurant restaurant = findRestaurantById(updateRestaurantDto.getId());
+
         if(restaurant != null) {
             restaurant.setName(updateRestaurantDto.getName());
             restaurant.setEmail(updateRestaurantDto.getEmail());
             restaurant.setPhone(updateRestaurantDto.getPhone());
             restaurantRepository.save(restaurant);
         }
+    }
+
+    public Restaurant findRestaurantById(Integer id) {
+        return  restaurantRepository.findById(id)
+                .orElseThrow(() -> new RestaurantNotFoundException(id));
     }
 }

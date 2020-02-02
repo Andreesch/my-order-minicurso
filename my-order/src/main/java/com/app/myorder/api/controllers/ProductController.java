@@ -1,6 +1,8 @@
 package com.app.myorder.api.controllers;
 
 import com.app.myorder.api.dtos.CreateProductDto;
+import com.app.myorder.api.dtos.CreateProductResponseDto;
+import com.app.myorder.api.mappers.ProductMapper;
 import com.app.myorder.services.ProductService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,7 +30,8 @@ public class ProductController {
     })
     public CreateProductResponseDto create(
             @ApiParam(value = "${v1.product}", required = true) @RequestBody @Valid CreateProductDto createProductDto) {
-        return null;
+        return ProductMapper
+                .toResponseDto(productService.create(createProductDto));
     }
 
 }

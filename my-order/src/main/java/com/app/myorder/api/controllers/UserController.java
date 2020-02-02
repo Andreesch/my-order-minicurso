@@ -2,7 +2,7 @@ package com.app.myorder.api.controllers;
 
 import com.app.myorder.api.dtos.CreateUserDto;
 import com.app.myorder.api.dtos.CreateUserResponseDto;
-import com.app.myorder.api.mappers.CreateUserMapper;
+import com.app.myorder.api.mappers.UserMapper;
 import com.app.myorder.services.UserService;
 import io.swagger.annotations.*;
 import org.slf4j.Logger;
@@ -32,6 +32,6 @@ public class UserController {
     })
     public CreateUserResponseDto create(
             @ApiParam(value = "${v1.user}", required = true) @RequestBody @Valid CreateUserDto createUserDto) {
-        return CreateUserMapper.toResponseDto(userService.createUser(createUserDto));
+        return UserMapper.toResponseDto(userService.createUser(createUserDto));
     }
 }
