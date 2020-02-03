@@ -28,7 +28,7 @@ public class Order {
     private Restaurant restaurant;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private Set<OrderItem> orders;
+    private Set<OrderItem> items;
 
     public Integer getId() {
         return id;
@@ -75,12 +75,12 @@ public class Order {
         return this;
     }
 
-    public Set<OrderItem> getOrders() {
-        return orders;
+    public Set<OrderItem> getItems() {
+        return items;
     }
 
-    public Order setOrders(Set<OrderItem> orders) {
-        this.orders = orders;
+    public Order setItems(Set<OrderItem> orders) {
+        this.items = orders;
         return this;
     }
 }

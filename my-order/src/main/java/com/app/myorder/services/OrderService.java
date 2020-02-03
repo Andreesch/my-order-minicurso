@@ -4,6 +4,7 @@ import com.app.myorder.api.dtos.OrderCreationDto;
 import com.app.myorder.api.dtos.OrderItemCreationDto;
 import com.app.myorder.entities.Order;
 import com.app.myorder.entities.Product;
+import com.app.myorder.enums.OrderStatusEnum;
 import com.app.myorder.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,8 +21,18 @@ public class OrderService {
     @Autowired
     private ProductService productService;
 
-    public Order create(OrderCreationDto orderCreationDto) {
+    @Autowired
+    private RestaurantService restaurantService;
 
+    @Autowired
+    private UserService userService;
+
+    public Order create(OrderCreationDto orderCreationDto) {
+        return new Order()
+                .setOrderStatus(OrderStatusEnum.OPEN)
+                .setRestaurant(restaurantService.findRestaurantById(orderCreationDto.getRestaurantId()))
+                .setUser(userService.findUserById(orderCreationDto.getUserId()))
+                .setTotalValue(calculateTotalValue(orderCreationDto.getItems()));
     }
 
     private Double calculateTotalValue(List<OrderItemCreationDto> items) {
