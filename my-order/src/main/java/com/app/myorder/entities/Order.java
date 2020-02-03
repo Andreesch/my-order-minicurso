@@ -3,10 +3,11 @@ package com.app.myorder.entities;
 import com.app.myorder.enums.OrderStatusEnum;
 
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 @Table(name = "USER_ORDER")
-public class UserOrder {
+public class Order {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -26,11 +27,14 @@ public class UserOrder {
     @JoinColumn(name="RESTAURANT", nullable = false)
     private Restaurant restaurant;
 
+    @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
+    private Set<OrderItem> orders;
+
     public Integer getId() {
         return id;
     }
 
-    public UserOrder setId(Integer id) {
+    public Order setId(Integer id) {
         this.id = id;
         return this;
     }
@@ -39,7 +43,7 @@ public class UserOrder {
         return totalValue;
     }
 
-    public UserOrder setTotalValue(Double totalValue) {
+    public Order setTotalValue(Double totalValue) {
         this.totalValue = totalValue;
         return this;
     }
@@ -48,7 +52,7 @@ public class UserOrder {
         return orderStatus;
     }
 
-    public UserOrder setOrderStatus(OrderStatusEnum orderStatus) {
+    public Order setOrderStatus(OrderStatusEnum orderStatus) {
         this.orderStatus = orderStatus;
         return this;
     }
@@ -57,7 +61,7 @@ public class UserOrder {
         return user;
     }
 
-    public UserOrder setUser(User user) {
+    public Order setUser(User user) {
         this.user = user;
         return this;
     }
@@ -66,8 +70,17 @@ public class UserOrder {
         return restaurant;
     }
 
-    public UserOrder setRestaurant(Restaurant restaurant) {
+    public Order setRestaurant(Restaurant restaurant) {
         this.restaurant = restaurant;
+        return this;
+    }
+
+    public Set<OrderItem> getOrders() {
+        return orders;
+    }
+
+    public Order setOrders(Set<OrderItem> orders) {
+        this.orders = orders;
         return this;
     }
 }

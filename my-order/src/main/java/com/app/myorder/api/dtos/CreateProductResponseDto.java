@@ -16,9 +16,6 @@ public class CreateProductResponseDto {
     @ApiModelProperty(value = "${product.create.value}")
     private Double value;
 
-    @ApiModelProperty(value = "${product.create.restaurantId}")
-    private Integer restaurantId;
-
     public Integer getId() {
         return id;
     }
@@ -52,15 +49,6 @@ public class CreateProductResponseDto {
 
     public CreateProductResponseDto setValue(Double value) {
         this.value = value;
-        return this;
-    }
-
-    public Integer getRestaurantId() {
-        return restaurantId;
-    }
-
-    public CreateProductResponseDto setRestaurantId(Integer restaurantId) {
-        this.restaurantId = restaurantId;
         return this;
     }
 }
