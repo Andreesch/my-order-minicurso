@@ -1,14 +1,18 @@
 package com.app.myorder.api.dtos;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.util.List;
 
 public class OrderCreationDto {
     @NotNull
+    @ApiModelProperty(value = "${order.create.userId}")
     private Integer userId;
 
     @NotNull
+    @ApiModelProperty(value = "${order.create.restaurantId}")
     private Integer restaurantId;
 
     @NotEmpty

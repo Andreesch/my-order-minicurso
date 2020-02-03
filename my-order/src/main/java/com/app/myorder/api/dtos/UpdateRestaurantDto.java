@@ -1,23 +1,29 @@
 package com.app.myorder.api.dtos;
 
+import io.swagger.annotations.ApiModelProperty;
+
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
 public class UpdateRestaurantDto {
 
     @NotNull
+    @ApiModelProperty(value = "update.restaurant.id")
     private Integer id;
 
     @NotNull
     @NotEmpty
+    @ApiModelProperty(value = "update.restaurant.name")
     private String name;
 
     @NotNull
     @NotEmpty
+    @ApiModelProperty(value = "update.restaurant.phone")
     private String phone;
 
     @NotNull
     @NotEmpty
+    @ApiModelProperty(value = "update.restaurant.email")
     private String email;
 
     public Integer getId() {
