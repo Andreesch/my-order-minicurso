@@ -8,6 +8,8 @@ import com.app.myorder.repositories.ProductRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
+
 @Service
 public class ProductService {
 
@@ -22,6 +24,10 @@ public class ProductService {
                 createProduct(createProductDto));
     }
 
+    public List<Product> findAllById(List<Integer> ids) {
+        return productRepository.findAllById(ids);
+    }
+
     private Product createProduct(CreateProductDto createProductDto) {
         return ProductMapper
                 .toEntity(createProductDto)
@@ -31,4 +37,6 @@ public class ProductService {
     private Restaurant findProductRestaurant(Integer restaurantId) {
         return restaurantService.findRestaurantById(restaurantId);
     }
+
+
 }
