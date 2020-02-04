@@ -34,7 +34,7 @@ public class RestaurantService {
     }
 
     public Restaurant findRestaurantById(Integer id) {
-        return  restaurantRepository.findById(id)
+        return restaurantRepository.findById(id)
                 .orElseThrow(() -> new RestaurantNotFoundException(id));
     }
 }

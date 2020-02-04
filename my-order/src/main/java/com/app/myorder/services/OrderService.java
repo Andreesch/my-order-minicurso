@@ -6,7 +6,6 @@ import com.app.myorder.entities.Order;
 import com.app.myorder.entities.OrderItem;
 import com.app.myorder.entities.Product;
 import com.app.myorder.enums.OrderStatusEnum;
-import com.app.myorder.repositories.OrderItemRepository;
 import com.app.myorder.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -21,9 +20,6 @@ public class OrderService {
     
     @Autowired
     private OrderRepository orderRepository;
-
-    @Autowired
-    private OrderItemRepository orderItemRepository;
 
     @Autowired
     private ProductService productService;

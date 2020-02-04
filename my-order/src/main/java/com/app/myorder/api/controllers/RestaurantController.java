@@ -1,7 +1,9 @@
 package com.app.myorder.api.controllers;
 
 import com.app.myorder.api.dtos.CreateRestaurantDto;
+import com.app.myorder.api.dtos.RestaurantFindResponseDto;
 import com.app.myorder.api.dtos.UpdateRestaurantDto;
+import com.app.myorder.api.mappers.RestaurantMapper;
 import com.app.myorder.services.RestaurantService;
 import io.swagger.annotations.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,4 +46,16 @@ public class RestaurantController {
         restaurantService.updateRestaurant(updateUserDto);
         return new CreateRestaurantDto();
     }
+
+    @GetMapping(value = "/{restaurantId}")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "${v1.restaurant.find}")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Sucesso", response = RestaurantFindResponseDto.class)
+    })
+    public RestaurantFindResponseDto findById(
+            @ApiParam(value = "${v1.restaurant.code}", required = true) @RequestParam("code") Integer code) {
+        return RestaurantMapper.toFindResponseDto(restaurantService.findRestaurantById(code));
+    }
+
 }
