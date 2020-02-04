@@ -3,7 +3,7 @@ package com.app.myorder.entities;
 import com.app.myorder.enums.OrderStatusEnum;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
 
 @Entity
 @Table(name = "USER_ORDER")
@@ -28,7 +28,7 @@ public class Order {
     private Restaurant restaurant;
 
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
-    private Set<OrderItem> items;
+    private List<OrderItem> items;
 
     public Integer getId() {
         return id;
@@ -75,12 +75,12 @@ public class Order {
         return this;
     }
 
-    public Set<OrderItem> getItems() {
+    public List<OrderItem> getItems() {
         return items;
     }
 
-    public Order setItems(Set<OrderItem> orders) {
-        this.items = orders;
+    public Order setItems(List<OrderItem> items) {
+        this.items = items;
         return this;
     }
 }
