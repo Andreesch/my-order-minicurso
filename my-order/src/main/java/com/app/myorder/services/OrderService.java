@@ -6,6 +6,7 @@ import com.app.myorder.entities.Order;
 import com.app.myorder.entities.OrderItem;
 import com.app.myorder.entities.Product;
 import com.app.myorder.enums.OrderStatusEnum;
+import com.app.myorder.helper.OrderHelper;
 import com.app.myorder.repositories.OrderItemRepository;
 import com.app.myorder.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -48,7 +49,7 @@ public class OrderService {
                 .setOrderStatus(OrderStatusEnum.OPEN)
                 .setUser(userService.findUserById(orderCreationDto.getUserId()))
                 .setRestaurant(restaurantService.findRestaurantById(orderCreationDto.getRestaurantId()))
-                .setTotalValue(calculateTotalValue(orderCreationDto.getItems(), products))
+                .setTotalValue(OrderHelper.calculateTotalValue(orderCreationDto.getItems(), products))
                 .setItems(createItems(orderCreationDto.getItems(), products));
     }
 
@@ -64,25 +65,7 @@ public class OrderService {
                .collect(Collectors.toList());
     }
 
-    private Double calculateTotalValue(List<OrderItemCreationDto> items, List<Product> products) {
-        BigDecimal totalValue = items.stream()
-                .map(orderItemCreationDto -> {
-                    Optional<Product> currentProduct = products.stream()
-                            .filter(product -> product.getId().equals(orderItemCreationDto.getItemId()))
-                            .findFirst();
-
-            return calculateItemValue(orderItemCreationDto.getQuantity(), currentProduct.get());
-        }).reduce(BigDecimal.ZERO, BigDecimal::add);
-
-        return totalValue.doubleValue();
-    }
-
     private List<Product> findProductsById(List<Integer> productsId) {
         return productService.findAllById(productsId);
-    }
-
-    private BigDecimal calculateItemValue(Integer quantity, Product product) {
-        return new BigDecimal(product.getValue())
-                .multiply(new BigDecimal(quantity));
     }
 }
