@@ -3,6 +3,7 @@ package com.app.myorder.services;
 import com.app.myorder.api.dtos.CreateUserDto;
 import com.app.myorder.api.mappers.UserMapper;
 import com.app.myorder.entities.User;
+import com.app.myorder.exceptions.NotFoundException;
 import com.app.myorder.repositories.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -18,8 +19,8 @@ public class UserService {
         return userRepository.save(user);
     }
 
-    public User findUserById(Integer userId) {
-//        return userRepository.findById(userId);
-        return null;
+    public User findUserById(Integer id) {
+        return userRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException("user.notfound.exception", new String[id]));
     }
 }

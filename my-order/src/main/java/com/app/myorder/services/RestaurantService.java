@@ -3,7 +3,7 @@ package com.app.myorder.services;
 import com.app.myorder.api.dtos.CreateRestaurantDto;
 import com.app.myorder.api.dtos.UpdateRestaurantDto;
 import com.app.myorder.entities.Restaurant;
-import com.app.myorder.exceptions.RestaurantNotFoundException;
+import com.app.myorder.exceptions.NotFoundException;
 import com.app.myorder.repositories.RestaurantRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -35,6 +35,6 @@ public class RestaurantService {
 
     public Restaurant findRestaurantById(Integer id) {
         return restaurantRepository.findById(id)
-                .orElseThrow(() -> new RestaurantNotFoundException(id));
+                .orElseThrow(() -> new NotFoundException("restaurant.notfound.exception", new String[id]));
     }
 }

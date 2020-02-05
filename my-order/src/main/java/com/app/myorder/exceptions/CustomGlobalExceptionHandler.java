@@ -11,7 +11,7 @@ import java.io.IOException;
 @ControllerAdvice
 public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(RestaurantNotFoundException.class)
+    @ExceptionHandler(NotFoundException.class)
     public void handleNotFound(HttpServletResponse response) throws IOException {
         response.sendError(HttpStatus.NOT_FOUND.value());
     }

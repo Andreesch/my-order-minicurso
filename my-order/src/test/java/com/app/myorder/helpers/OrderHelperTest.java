@@ -36,7 +36,9 @@ public class OrderHelperTest {
     public void calculateItemValueTest() {
         Product product = Mockito.mock(Product.class);
         Mockito.when(product.getValue()).thenReturn(2d);
+
         Double itemValue = OrderHelper.calculateItemValue(2, product);
+
         assertNotNull(itemValue);
         assertEquals(4d, itemValue.doubleValue());
     }
