@@ -15,19 +15,27 @@ var app = angular.module('myOrderApp')
     $scope.loadRestaurants = function(){
         restaurantListService.get(null, null, function(response){
           $scope.restaurants = response.restaurants;
-          console.log(response);
         }, function(response) {
           console.log(response);
         });
     };
 
+    $scope.saveRestaurant = function() {
+      if($scope.newRestaurant.id) {
+        $scope.editRestaurant();
+      } else {
+        $scope.addRestaurant();
+      }
+    }
+
     $scope.addRestaurant = function() {
+
       restaurantService.post(null, {
         name: $scope.newRestaurant.name,
         phone: $scope.newRestaurant.phone,
         email: $scope.newRestaurant.email
       }, function(response){
-        flash.success = $scope.newRestaurant.name + ' was updated successfully.';
+        flash.success = $scope.newRestaurant.name + ' foi atualizado com sucesso.';
 
         // Close Modal (@todo find another 
         // way other than dom method in controller)
@@ -42,29 +50,43 @@ var app = angular.module('myOrderApp')
       });
     }
 
-  	/*
-     * Reset defaults
-  	 */
-  	$scope.defaults = function () {
+    $scope.editRestaurant = function() {     
+      restaurantService.put(null, {
+        id: $scope.newRestaurant.id,
+        name: $scope.newRestaurant.name,
+        phone: $scope.newRestaurant.phone,
+        email: $scope.newRestaurant.email
+      }, function(response){
+        flash.success = $scope.newRestaurant.name + ' foi atualizado com sucesso.';
 
-  		// set scope to default array
-  		/*$scope.restaurants = [
-	    	{ id: 1, name: 'Burger King', phone: '1234567890', mail: 'info@burgerking.com' },
-	    	{ id: 2, name: 'Pizza Hut', phone: '1432567890', mail: 'info@pizzahut.com' },
-	    	{ id: 3, name: 'KFC', phone: '1234509876', mail: 'info@kfc.com' },
-	    	{ id: 4, name: 'Chili\'s', phone: '6543217890', mail: 'info@chilis.com' },
-	    	{ id: 5, name: 'Cook Door', phone: '6789012345', mail: 'info@cookdoor.com' }
-	    ];*/
+        // Close Modal (@todo find another 
+        // way other than dom method in controller)
+        // document.getElementById('restaurant-form').modal('hide');
 
-	    // flash message
-	    flash.success = 'Restaurants store reseted to defaults successfully.';
+        // clean scope from newRestaurant
+        $scope.newRestaurant = {};
 
-  	};
-
-    // If !restaurants call defaults
-    if( !$store.get('restaurants') ) {
-      $scope.defaults();
+        $scope.loadRestaurants();
+      }, function(response){
+        console.log(response);
+      });
     }
+
+    $scope.selectRestaurantToRemove = function(id) {
+      $scope.selectedRestaurantToRemove = id;
+    }
+
+    $scope.removeRestaurant = function() {
+
+      restaurantService.delete({id: $scope.selectedRestaurantToRemove}, null, function(response){
+        flash.success = 'Removido com sucesso.';
+        $scope.loadRestaurants();
+      }, function(response){
+        console.log(response);
+      });
+    }
+
+    $scope.loadRestaurants();
 
   	/*
   	 * Generate new Id
@@ -88,18 +110,4 @@ var app = angular.module('myOrderApp')
             }
         }
     };
-
-	/*
-	 * Destroy item by Index
-	 */
-    $scope.destroy = function ($index) {
-    	// Delete from array
-    	var removed = $scope.restaurants.splice($index, 1);
-
-    	// Show flash message
-		flash.success = removed[0].name + ' was deleted successfully.';
-    };
-
-    $scope.loadRestaurants();
-
 }]);

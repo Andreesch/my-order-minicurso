@@ -4,12 +4,12 @@
 	<div ng-include="'views/partials/messages.html'" ></div>
 
 	<header class="page-header clearfix">
-		<h3 class="pull-left">Order History</h3>
+		<h3 class="pull-left">Histórico de pedidos</h3>
 		<br>
 		<div class="btn-group pull-right">
 			<button class="btn btn-primary" data-toggle="modal" ng-click="newOrder = {}; orderForm.$setPristine();" data-target="#newOrderForm">
 				<span class="glyphicon glyphicon-plus-sign"></span>
-				New Order
+				Novo pedido
 			</button>
 			<div class="input-group">
 		      <input 
@@ -23,9 +23,9 @@
 	</header>
 	
 	<div class="jumbotron empty" ng-hide="orders.length">
-	  <h1>Aren't you hungry?</h1>
+	  <h1>Está com fome?</h1>
 	  <p class="lead">
-	    Click below to place a new order...
+	    Clique abaixo para adicionar um pedido...
 	  </p>
 	  <p>
 	  	<button 
@@ -34,7 +34,7 @@
 	  		ng-click="newOrder = {}; orderForm.$setPristine();" 
 	  		data-target="#newOrderForm">
 	  		<span class="glyphicon glyphicon-shopping-cart"></span>
-	  		Yes I'am
+	  		Adicionar pedido
 	  	</button>
 	  </p>
 	</div>
@@ -43,9 +43,9 @@
 		<thead>
 			<tr>
 				<th>#</th>
-				<th>Order Date</th>
-				<th>Details</th>
-				<th>Restaurant</th>
+				<th>Data pedido</th>
+				<th>Detalhes</th>
+				<th>Restaurante</th>
 				<th></th>
 			</tr>
 		</thead>
@@ -68,7 +68,7 @@
 							class="btn btn-sm btn-success">
 
 							<span class="glyphicon glyphicon-refresh"></span>
-							Reorder
+							Refazer
 						</button>
 					</div>
 
@@ -94,9 +94,9 @@
 	  <div class="modal-content">
 	    <div class="modal-header">
 	      <h4 class="modal-title"> 
-	       	<span ng-hide="newOrder.reorder">New Order</span> 
-			<span ng-show="newOrder.reorder">Reorder</span> 
-	       	from {{newOrder.restaurant.name}}
+	       	<span ng-hide="newOrder.reorder">Novo pedido</span> 
+			<span ng-show="newOrder.reorder">Refazer</span> 
+	       	de {{newOrder.restaurant.name}}
 	        </h4>
 	    </div>
 	    <div class="modal-body">
@@ -130,7 +130,7 @@
 							required>
 					</div>
 					<span class="help-block" ng-show="orderForm.orderRest.$invalid">
-						Please choose a restaurant from the select list.
+						Selecione um restaurante na lista.
 					</span>
 				</div>
 
@@ -146,7 +146,7 @@
 					</textarea>
 
 					<span class="help-block" ng-show="orderForm.orderDetails.$dirty && orderForm.orderDetails.$invalid">
-						Please enter your order details.
+						Cadastre os dados do pedido.
 					</span>
 
 				</div>
@@ -155,11 +155,11 @@
 	     
 	    </div>
 	    <div class="modal-footer">
-	      <button ng-click="newOrder = {}; orderForm.$setPristine();" type="button" data-dismiss="modal" class="btn btn-default pull-left">Cancle</button>
+	      <button ng-click="newOrder = {}; orderForm.$setPristine();" type="button" data-dismiss="modal" class="btn btn-default pull-left">Cancelar</button>
 	      
 	      <button type="button" class="btn btn-success" ng-disabled="orderForm.$pristine || orderForm.$invalid" ng-click="save()" data-dismiss="modal">
 			<span class="glyphicon glyphicon-shopping-cart"></span>
-	      	Order
+	      	Pedido
 	      </button>
 
 	    </div>
