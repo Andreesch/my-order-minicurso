@@ -1,14 +1,15 @@
 package com.app.myorder.services;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.app.myorder.api.dtos.CreateRestaurantDto;
 import com.app.myorder.api.dtos.UpdateRestaurantDto;
 import com.app.myorder.config.Translator;
 import com.app.myorder.entities.Restaurant;
 import com.app.myorder.exceptions.NotFoundException;
 import com.app.myorder.repositories.RestaurantRepository;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 @Service
 public class RestaurantService {
@@ -38,5 +39,9 @@ public class RestaurantService {
     public Restaurant findRestaurantById(Integer id) {
         return restaurantRepository.findById(id)
                 .orElseThrow(() -> new NotFoundException(Translator.toLocale("restaurant.notfound.exception", new Integer[]{id})));
+    }
+
+    public List<Restaurant> listAll() {
+        return restaurantRepository.findAll();
     }
 }

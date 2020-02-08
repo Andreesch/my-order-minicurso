@@ -9,14 +9,11 @@ import com.app.myorder.entities.Product;
 import com.app.myorder.enums.OrderStatusEnum;
 import com.app.myorder.exceptions.NotFoundException;
 import com.app.myorder.helper.OrderHelper;
-import com.app.myorder.repositories.OrderItemRepository;
 import com.app.myorder.repositories.OrderRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -44,12 +41,13 @@ public class OrderService {
                 .map(OrderItemCreationDto::getItemId)
                 .collect(Collectors.toList()));
 
-        return new Order()
-                .setOrderStatus(OrderStatusEnum.OPEN)
+        Order order = new Order();
+
+        return order.setOrderStatus(OrderStatusEnum.OPEN)
                 .setUser(userService.findUserById(orderCreationDto.getUserId()))
                 .setRestaurant(restaurantService.findRestaurantById(orderCreationDto.getRestaurantId()))
                 .setTotalValue(OrderHelper.calculateTotalValue(orderCreationDto.getItems(), products))
-                .setItems(createItems(orderCreationDto.getItems(), products));
+                .setItems(createItems(orderCreationDto.getItems(), products, order));
     }
 
     public Order find(Integer id) {
@@ -61,8 +59,7 @@ public class OrderService {
         return orderRepository.listByUserId(id);
     }
 
-
-    private List<OrderItem> createItems(List<OrderItemCreationDto> orderItemCreationDtos, List<Product> products) {
+    private List<OrderItem> createItems(List<OrderItemCreationDto> orderItemCreationDtos, List<Product> products, Order order) {
 
        return orderItemCreationDtos.stream()
                 .map(orderItemCreationDto -> new OrderItem()
@@ -70,7 +67,8 @@ public class OrderService {
                                 .filter(p -> p.getId().equals(orderItemCreationDto.getItemId()))
                                 .findFirst()
                                 .get())
-                        .setQuantity(orderItemCreationDto.getQuantity()))
+                        .setQuantity(orderItemCreationDto.getQuantity())
+                        .setOrder(order))
                .collect(Collectors.toList());
     }
 

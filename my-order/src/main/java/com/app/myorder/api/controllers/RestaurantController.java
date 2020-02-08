@@ -1,8 +1,8 @@
 package com.app.myorder.api.controllers;
 
 import com.app.myorder.api.dtos.CreateRestaurantDto;
-import com.app.myorder.api.dtos.RestaurantFindResponseDto;
 import com.app.myorder.api.dtos.UpdateRestaurantDto;
+import com.app.myorder.api.dtos.restaurant.RestaurantResponseListDto;
 import com.app.myorder.api.mappers.RestaurantMapper;
 import com.app.myorder.services.RestaurantService;
 import io.swagger.annotations.*;
@@ -47,15 +47,14 @@ public class RestaurantController {
         return new CreateRestaurantDto();
     }
 
-    @GetMapping(value = "/{restaurantId}")
+    @GetMapping(value = "/list")
     @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(value = "${v1.restaurant.find}")
+    @ApiOperation(value = "${v1.restaurant.list}")
     @ApiResponses({
-            @ApiResponse(code = 200, message = "Sucesso", response = RestaurantFindResponseDto.class)
+            @ApiResponse(code = 200, message = "Sucesso", response = RestaurantResponseListDto.class)
     })
-    public RestaurantFindResponseDto findById(
-            @ApiParam(value = "${v1.restaurant.code}", required = true) @RequestParam("code") Integer code) {
-        return RestaurantMapper.toFindResponseDto(restaurantService.findRestaurantById(code));
+    public RestaurantResponseListDto list() {
+        return RestaurantMapper.toRestaurantListDto(restaurantService.listAll());
     }
 
 }

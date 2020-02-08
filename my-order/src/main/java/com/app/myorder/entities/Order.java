@@ -20,13 +20,14 @@ public class Order {
     private OrderStatusEnum orderStatus;
 
     @ManyToOne
-    @JoinColumn(name="USER", nullable = false)
+    @JoinColumn(name="USER", nullable = false, updatable = false)
     private User user;
 
     @ManyToOne
-    @JoinColumn(name="RESTAURANT", nullable = false)
+    @JoinColumn(name="RESTAURANT", nullable = false, updatable = false)
     private Restaurant restaurant;
 
+    @OrderBy("id ASC")
     @OneToMany(mappedBy = "order", cascade = CascadeType.ALL)
     private List<OrderItem> items;
 

@@ -1,4 +1,4 @@
-package com.app.myorder.api.dtos;
+package com.app.myorder.api.dtos.user;
 
 import com.app.myorder.api.validations.PasswordValidator;
 import io.swagger.annotations.ApiModelProperty;

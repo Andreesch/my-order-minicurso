@@ -1,15 +1,14 @@
 package com.app.myorder.api.dtos;
 
-import java.util.List;
-
 import com.app.myorder.api.dtos.order.OrderItemDto;
-import com.app.myorder.api.dtos.order.OrderRestaurantDto;
-import com.app.myorder.api.dtos.order.OrderUserDto;
+import com.app.myorder.api.dtos.restaurant.RestaurantResponseDto;
+import com.app.myorder.api.dtos.user.UserResponseDto;
 import com.app.myorder.enums.OrderStatusEnum;
-
 import io.swagger.annotations.ApiModelProperty;
 
-public class OrderFindResponseDto {
+import java.util.List;
+
+public class OrderResponseDto {
 
     @ApiModelProperty(value = "${order.find.id}")
     private Integer id;
@@ -21,10 +20,10 @@ public class OrderFindResponseDto {
     private OrderStatusEnum orderStatus;
 
     @ApiModelProperty(value = "${order.find.user}")
-    private OrderUserDto user;
+    private UserResponseDto user;
 
     @ApiModelProperty(value = "${order.find.restaurant}")
-    private OrderRestaurantDto restaurant;
+    private RestaurantResponseDto restaurant;
 
     @ApiModelProperty(value = "${order.find.items}")
     private List<OrderItemDto> items;
@@ -33,7 +32,7 @@ public class OrderFindResponseDto {
         return id;
     }
 
-    public OrderFindResponseDto setId(Integer id) {
+    public OrderResponseDto setId(Integer id) {
         this.id = id;
         return this;
     }
@@ -42,7 +41,7 @@ public class OrderFindResponseDto {
         return totalValue;
     }
 
-    public OrderFindResponseDto setTotalValue(Double totalValue) {
+    public OrderResponseDto setTotalValue(Double totalValue) {
         this.totalValue = totalValue;
         return this;
     }
@@ -51,25 +50,25 @@ public class OrderFindResponseDto {
         return orderStatus;
     }
 
-    public OrderFindResponseDto setOrderStatus(OrderStatusEnum orderStatus) {
+    public OrderResponseDto setOrderStatus(OrderStatusEnum orderStatus) {
         this.orderStatus = orderStatus;
         return this;
     }
 
-    public OrderUserDto getUser() {
+    public UserResponseDto getUser() {
         return user;
     }
 
-    public OrderFindResponseDto setUser(OrderUserDto user) {
+    public OrderResponseDto setUser(UserResponseDto user) {
         this.user = user;
         return this;
     }
 
-    public OrderRestaurantDto getRestaurant() {
+    public RestaurantResponseDto getRestaurant() {
         return restaurant;
     }
 
-    public OrderFindResponseDto setRestaurant(OrderRestaurantDto restaurant) {
+    public OrderResponseDto setRestaurant(RestaurantResponseDto restaurant) {
         this.restaurant = restaurant;
         return this;
     }
@@ -78,7 +77,7 @@ public class OrderFindResponseDto {
         return items;
     }
 
-    public OrderFindResponseDto setItems(List<OrderItemDto> items) {
+    public OrderResponseDto setItems(List<OrderItemDto> items) {
         this.items = items;
         return this;
     }
