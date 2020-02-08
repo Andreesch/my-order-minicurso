@@ -16,3 +16,17 @@ appServices.factory('RestaurantService', ['$resource', function(resource) {
 		delete: {method: 'DELETE'}
 	});
 }]);
+
+appServices.factory('ProductListService', ['$resource', function(resource) {
+	return resource(domainURL + '/product/list', null, {
+		get: { method:'GET'}
+	});
+}]);
+
+appServices.factory('ProductService', ['$resource', function(resource) {
+	return resource(domainURL + '/product', null, {
+		post: { method:'POST'},
+		put: {method: 'PUT'},
+		delete: {method: 'DELETE'}
+	});
+}]);
