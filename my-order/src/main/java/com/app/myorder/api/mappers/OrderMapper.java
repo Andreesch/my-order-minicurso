@@ -27,7 +27,6 @@ public class OrderMapper {
                 .setUser(UserMapper.toResponseDto(order.getUser()))
                 .setRestaurant(RestaurantMapper.toRestaurantResponseDto(order.getRestaurant()))
                 .setItems(OrderItemMapper.toOrderItemDtoList(order.getItems()));
-
     }
 
     public static OrderResponseListDto toOrderResponseListDto(List<Order> orders) {

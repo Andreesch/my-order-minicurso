@@ -2,6 +2,7 @@ package com.app.myorder.services;
 
 import com.app.myorder.api.dtos.order.OrderCreationDto;
 import com.app.myorder.api.dtos.OrderItemCreationDto;
+import com.app.myorder.api.dtos.order.OrderStatusChangeDto;
 import com.app.myorder.config.Translator;
 import com.app.myorder.entities.Order;
 import com.app.myorder.entities.OrderItem;
@@ -61,6 +62,11 @@ public class OrderService {
 
     public List<Order> listAll() {
         return orderRepository.findAll();
+    }
+
+    public void updateOrderStatus(OrderStatusChangeDto orderStatusChangeDto) {
+        orderRepository.save(find(orderStatusChangeDto.getOrderId())
+                .setOrderStatus(orderStatusChangeDto.getOrderStatusEnum()));
     }
 
     private List<OrderItem> createItems(List<OrderItemCreationDto> orderItemCreationDtos, List<Product> products, Order order) {

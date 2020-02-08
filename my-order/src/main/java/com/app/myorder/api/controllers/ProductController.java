@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController("ProductController")
-@RequestMapping(RestPath.BASE_PATH + "/products")
+@RequestMapping(RestPath.BASE_PATH + "/product")
 @Api(tags = "Products")
 public class ProductController {
 

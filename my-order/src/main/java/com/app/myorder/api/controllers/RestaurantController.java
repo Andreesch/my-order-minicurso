@@ -63,7 +63,7 @@ public class RestaurantController {
             @ApiResponse(code = 200, message = "Sucesso")
     })
     public void delete(
-            @ApiParam(value = "${v1.restaurant}", required = true) @RequestParam @Param("id") Integer id) {
+            @ApiParam(value = "${v1.restaurant.id}", required = true) @RequestParam @Param("id") Integer id) {
         restaurantService.deleteRestaurant(id);
     }
 

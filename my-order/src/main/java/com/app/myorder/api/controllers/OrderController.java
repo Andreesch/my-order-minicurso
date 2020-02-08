@@ -3,6 +3,7 @@ package com.app.myorder.api.controllers;
 import com.app.myorder.api.dtos.order.OrderCreationDto;
 import com.app.myorder.api.dtos.order.OrderResponseDto;
 import com.app.myorder.api.dtos.order.OrderResponseListDto;
+import com.app.myorder.api.dtos.order.OrderStatusChangeDto;
 import com.app.myorder.api.dtos.restaurant.RestaurantResponseDto;
 import com.app.myorder.api.mappers.OrderMapper;
 import com.app.myorder.services.OrderService;
@@ -54,6 +55,17 @@ public class OrderController {
     public OrderResponseListDto list() {
         return OrderMapper.toOrderResponseListDto(
                 orderService.listAll());
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping(value="/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "${v1.order.status.update}")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Atualizado com sucesso", response = OrderResponseDto.class)
+    })
+    public void update(
+            @ApiParam(value = "${v1.order}", required = true) @RequestBody @Valid OrderStatusChangeDto orderStatusChangeDto) {
+        orderService.updateOrderStatus(orderStatusChangeDto);
     }
 
 }
