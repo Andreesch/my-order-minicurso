@@ -1,8 +1,8 @@
-package com.app.myorder.api.dtos;
+package com.app.myorder.api.dtos.product;
 
 import io.swagger.annotations.ApiModelProperty;
 
-public class CreateProductResponseDto {
+public class ProductResponseDto {
 
     @ApiModelProperty(value = "${product.create.id}")
     private Integer id;
@@ -20,7 +20,7 @@ public class CreateProductResponseDto {
         return id;
     }
 
-    public CreateProductResponseDto setId(Integer id) {
+    public ProductResponseDto setId(Integer id) {
         this.id = id;
         return this;
     }
@@ -29,7 +29,7 @@ public class CreateProductResponseDto {
         return name;
     }
 
-    public CreateProductResponseDto setName(String name) {
+    public ProductResponseDto setName(String name) {
         this.name = name;
         return this;
     }
@@ -38,7 +38,7 @@ public class CreateProductResponseDto {
         return description;
     }
 
-    public CreateProductResponseDto setDescription(String description) {
+    public ProductResponseDto setDescription(String description) {
         this.description = description;
         return this;
     }
@@ -47,7 +47,7 @@ public class CreateProductResponseDto {
         return value;
     }
 
-    public CreateProductResponseDto setValue(Double value) {
+    public ProductResponseDto setValue(Double value) {
         this.value = value;
         return this;
     }

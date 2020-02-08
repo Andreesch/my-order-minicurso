@@ -19,11 +19,11 @@ public class Order {
     @Column(name = "STATUS", nullable = false)
     private OrderStatusEnum orderStatus;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="USER", nullable = false, updatable = false)
     private User user;
 
-    @ManyToOne
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name="RESTAURANT", nullable = false, updatable = false)
     private Restaurant restaurant;
 

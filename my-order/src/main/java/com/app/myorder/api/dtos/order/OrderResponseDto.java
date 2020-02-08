@@ -1,6 +1,5 @@
-package com.app.myorder.api.dtos;
+package com.app.myorder.api.dtos.order;
 
-import com.app.myorder.api.dtos.order.OrderItemDto;
 import com.app.myorder.api.dtos.restaurant.RestaurantResponseDto;
 import com.app.myorder.api.dtos.user.UserResponseDto;
 import com.app.myorder.enums.OrderStatusEnum;

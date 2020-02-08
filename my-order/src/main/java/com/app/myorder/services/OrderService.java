@@ -1,6 +1,6 @@
 package com.app.myorder.services;
 
-import com.app.myorder.api.dtos.OrderCreationDto;
+import com.app.myorder.api.dtos.order.OrderCreationDto;
 import com.app.myorder.api.dtos.OrderItemCreationDto;
 import com.app.myorder.config.Translator;
 import com.app.myorder.entities.Order;
@@ -57,6 +57,10 @@ public class OrderService {
 
     public List<Order> findAllByUserId(Integer id) {
         return orderRepository.listByUserId(id);
+    }
+
+    public List<Order> listAll() {
+        return orderRepository.findAll();
     }
 
     private List<OrderItem> createItems(List<OrderItemCreationDto> orderItemCreationDtos, List<Product> products, Order order) {
