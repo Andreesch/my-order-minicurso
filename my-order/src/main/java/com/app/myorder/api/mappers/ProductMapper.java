@@ -22,7 +22,8 @@ public class ProductMapper {
     }
 
     public static ProductResponseDto toResponseDto(Product product){
-        return modelMapper.map(product, ProductResponseDto.class);
+        return modelMapper.map(product, ProductResponseDto.class)
+                .setRestaurant(RestaurantMapper.toRestaurantResponseDto(product.getRestaurant()));
     }
 
     public static ProductDto toProductDto(Product product) {
@@ -32,7 +33,7 @@ public class ProductMapper {
     public static ProductResponseListDto toProductResponseListDto(List<Product> products) {
         return new ProductResponseListDto()
                 .setProducts(products.stream()
-                .map(ProductMapper::toResponseDto)
+                        .map(ProductMapper::toResponseDto)
                 .collect(Collectors.toList()));
     }
 }

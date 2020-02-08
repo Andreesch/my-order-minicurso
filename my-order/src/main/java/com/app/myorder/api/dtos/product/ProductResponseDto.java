@@ -1,5 +1,6 @@
 package com.app.myorder.api.dtos.product;
 
+import com.app.myorder.api.dtos.restaurant.RestaurantResponseDto;
 import io.swagger.annotations.ApiModelProperty;
 
 public class ProductResponseDto {
@@ -15,6 +16,9 @@ public class ProductResponseDto {
 
     @ApiModelProperty(value = "${product.create.value}")
     private Double value;
+
+    @ApiModelProperty(value = "${product.create.restaurant}")
+    private RestaurantResponseDto restaurant;
 
     public Integer getId() {
         return id;
@@ -49,6 +53,15 @@ public class ProductResponseDto {
 
     public ProductResponseDto setValue(Double value) {
         this.value = value;
+        return this;
+    }
+
+    public RestaurantResponseDto getRestaurant() {
+        return restaurant;
+    }
+
+    public ProductResponseDto setRestaurant(RestaurantResponseDto restaurant) {
+        this.restaurant = restaurant;
         return this;
     }
 }

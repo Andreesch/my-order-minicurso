@@ -1,0 +1,191 @@
+<div class="row">
+	
+	<!-- Flash Messages -->
+	<div ng-include="'views/partials/messages.html'" ></div>
+
+	<header class="page-header clearfix">
+		<h3 class="pull-left">Usuários</h3>
+		<br>
+		<div class="btn-group pull-right">
+			<button class="btn btn-default" ng-click="newUser = null;" data-toggle="modal" data-target="#user-form">
+				<span class="glyphicon glyphicon-plus-sign"></span>
+				Adicionar Usuário
+			</button>
+			<buttom class="btn btn-warning" ng-click="loadUsers()">
+				<span class="glyphicon glyphicon-repeat"></span>
+				Recarregar
+			</buttom>
+		</div>	
+	</header>
+	
+	<div class="jumbotron empty" ng-hide="users.length">
+	  <h1>Sem usuários?</h1>
+	  <p class="lead">
+	    Você pode adicionar abaixo...
+	  </p>
+	  <p>
+	  	<button 
+	  		class="btn btn-lg btn-primary" 
+	  		data-toggle="modal" 
+	  		ng-click="newUser = {}; restForm.$setPristine();" 
+	  		data-target="#user-form">
+	  		<span class="glyphicon glyphicon-cutlery"></span>
+	  		Adicionar Usuário
+	  	</button>
+	  </p>
+	</div>
+
+	<table class="table table-hover" ng-show="users.length">
+
+		<tbody>
+			<tr class="repeated-item" ng-repeat="user in users track by user.id">
+				<td>{{user.id}}</td>
+                <td>{{user.name}}</td>
+                <td>{{user.password}}</td>
+                <td>{{user.address}}</td>
+				<td>
+					<a href="tel:{{user.phone}}">
+						{{user.phone}}
+					</a>
+				</td>
+				<td>
+					<a href="mailto:{{user.email}}">
+						{{user.email}}
+					</a>
+				</td>
+				<td>
+					<div class="btn-group pull-right">
+						<button ng-click="edit(users[$index].id)" data-toggle="modal" data-target="#user-form" class="btn btn-sm btn-primary">
+						<span class="glyphicon glyphicon-edit"></span>
+						Edit
+						</button> 
+						
+						<button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#warning-modal" ng-click="selectUserToRemove(users[$index].id)">
+						<span class="glyphicon glyphicon-trash"></span>
+						</button>
+					</div>
+
+				</td>
+			</tr>
+		</tbody>
+
+	</table>
+</div>
+
+
+<!-- user Form Modal -->
+<div 
+	class="modal fade" 
+	id="user-form" 
+	data-backdrop="static" 
+	data-keyboard="false" 
+	role="dialog" 
+	aria-labelledby="user-form" 
+	aria-hidden="true">
+
+	<div class="modal-dialog">
+	  <div class="modal-content">
+	    <div class="modal-header">
+	      <h4 class="modal-title"> 
+	        <span ng-hide="newUser.id">Novo</span>
+	        <span ng-show="newUser.id">Edit:</span>
+	        {{newUser.name}}
+	        </h4>
+	    </div>
+	    <div class="modal-body">
+	      
+	        <form ng-submit="" name="restForm" id="restForm" novalidate>
+	        	
+	        	<div class="form-group">
+		        	<div class="input-group">
+		        		<span class="input-group-addon">
+		        			<span class="glyphicon glyphicon-cutlery"></span>
+		        		</span>
+						<input 
+							placeholder="Name"
+							type="text" 
+							class="form-control" 
+							name="name" 
+							id="name" 
+							ng-model="newUser.name" 
+							required >
+					</div>
+					<span class="help-block" ng-show="restForm.name.$dirty && restForm.name.$invalid">
+						Digite o nome do usuário.
+					</span>
+				</div>
+
+				<div class="form-group">
+					<div class="input-group">
+						<span class="input-group-addon">
+							<span class="glyphicon glyphicon-earphone"></span>
+						</span>
+						<input 
+							placeholder="Phone"
+							type="tel" 
+							class="form-control" 
+							name="phone" 
+							id="phone" 
+							ng-model="newUser.phone" 
+							required >
+					</div>
+
+					<span class="help-block" ng-show="restForm.phone.$dirty && restForm.phone.$invalid">
+						Digite o número de telefone do usuário.
+					</span>
+
+				</div>
+					
+				<div class="form-group">
+
+		        	<div class="input-group">
+			        	<span class="input-group-addon">
+			        		<span class="glyphicon glyphicon-envelope"></span>
+				        </span>
+				        <input 
+				        	placeholder="Email"
+				        	type="email" 
+				        	class="form-control" 
+				        	name="mail" 
+				        	id="mail" 
+				        	ng-model="newUser.email" 
+				        	required >
+		        	</div>
+
+	        		<div class="help-block" 
+	        			ng-show="restForm.mail.$dirty && restForm.mail.$invalid">
+
+		            	<span ng-show="restForm.mail.$error.required">Email é obrigatório.</span>
+
+		            	<span ng-show="restForm.mail.$error.email">Não é um email válido.</span>
+
+		        	</div>
+
+	        	</div>
+	  	
+	         	<input type="hidden" ng-model="newUser.id">
+
+	        </form>
+	     
+	    </div>
+	    <div class="modal-footer">
+	      <button ng-click="newUser = {}; restForm.$setPristine();" type="button" data-dismiss="modal" class="btn btn-default pull-left">Cancelar</button>
+	      
+	      <button type="button" class="btn btn-success" data-dismiss="modal" ng-disabled="restForm.$pristine || restForm.$invalid" ng-click="saveUser()">Salvar</button>
+
+	    </div>
+	  </div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div>
+
+
+
+<!-- Warining Modal -->
+<div class="modal fade"
+	role="dialog" 
+	aria-labelledby="warning-modal"
+	data-backdrop="static" 
+	aria-hidden="true" 
+	id="warning-modal"
+	ng-include="'views/users/warning.users.html'">
+</div>
