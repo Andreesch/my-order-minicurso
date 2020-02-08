@@ -1,44 +1,12 @@
-# Order Me
-A prototype for a food ordering application using [AngularJS](http://angularjs.org) works on `localStorage`. 
+# my-order
 
-An online demo is hosted on [Heroku](http://order-me.herokuapp.com/).
+This project is generated with [yo angular generator](https://github.com/yeoman/generator-angular)
+version 0.16.0.
 
-## Technical Details
-### Used Tools
-* [AngularJS](http://angularjs.org)
-* [Twitter Bootstrap](http://getbootstrap.com)
-* [Yeoman](http://yeoman.io)
+## Build & development
 
-### Angular Modules
-* [ngRoute](http://docs.angularjs.org/api/ngRoute)
-* [ngAnimate](http://docs.angularjs.org/api/ngAnimate)
-* [angular-flash](https://github.com/wmluke/angular-flash)
+Run `grunt` for building and `grunt serve` for preview.
 
-## Deployment
-### Requirnments
-* Terminal
-* [NodeJS](http://nodejs.org/) & [NPM](https://npmjs.org/‎) installed.
+## Testing
 
-### Option 1
-* Use any webserver to host the `dist/` directory
-* eg. Run the build in PHP 5.4+ server `php -S localhost:8000`
-
-### Option 2
-* Use the NodeJS server `web.js`
-* Clone/download the repository and `cd` into it. 
-* Run `npm install --production` to install application dependencies
-* Run `node web.js` to launch web server
-* Navigate your browser to `http://localhost:5000`
-
-## Development
-### Requirnments
-* [NodeJS](http://nodejs.org/) & [NPM](https://npmjs.org/‎) installed.
-* [GruntJS](http://gruntjs.com/) & [Bower](http://bower.io/) which you can install by installing [Yeoman](http://yeoman.io/gettingstarted.html) directly.
-
-### Steps
-* Clone/download the repo and `cd` into it.
-* Install NodeJS dependencies `npm install`
-* Install app dependencies listed in bower.json `bower install` which will download the dependencies to `app/bower_components` directory.
-* Run `grunt serve` to open in browser with livereload.
-* To Build run `grunt build` which will run the grunt build script tp minify and concatnate scripts/styles and save it in the `dist/` directory.
-* App Files are located in the `app/` directory.
+Running `grunt test` will run the unit tests with karma.

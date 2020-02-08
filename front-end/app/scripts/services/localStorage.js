@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('orderMeApp')
+angular.module('myOrderApp')
 	.factory('$store', function storeFactory() {
 
 		var storage = window.localStorage;
