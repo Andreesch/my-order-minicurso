@@ -2,10 +2,12 @@ package com.app.myorder.services;
 
 import com.app.myorder.api.dtos.OrderCreationDto;
 import com.app.myorder.api.dtos.OrderItemCreationDto;
+import com.app.myorder.config.Translator;
 import com.app.myorder.entities.Order;
 import com.app.myorder.entities.OrderItem;
 import com.app.myorder.entities.Product;
 import com.app.myorder.enums.OrderStatusEnum;
+import com.app.myorder.exceptions.NotFoundException;
 import com.app.myorder.helper.OrderHelper;
 import com.app.myorder.repositories.OrderItemRepository;
 import com.app.myorder.repositories.OrderRepository;
@@ -49,6 +51,16 @@ public class OrderService {
                 .setTotalValue(OrderHelper.calculateTotalValue(orderCreationDto.getItems(), products))
                 .setItems(createItems(orderCreationDto.getItems(), products));
     }
+
+    public Order find(Integer id) {
+        return orderRepository.findById(id)
+                .orElseThrow(() -> new NotFoundException(Translator.toLocale("order.notfound.exception", new Integer[]{id})));
+    }
+
+    public List<Order> findAllByUserId(Integer id) {
+        return orderRepository.listByUserId(id);
+    }
+
 
     private List<OrderItem> createItems(List<OrderItemCreationDto> orderItemCreationDtos, List<Product> products) {
 

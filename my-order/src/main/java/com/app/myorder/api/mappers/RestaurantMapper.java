@@ -1,6 +1,7 @@
 package com.app.myorder.api.mappers;
 
 import com.app.myorder.api.dtos.RestaurantFindResponseDto;
+import com.app.myorder.api.dtos.order.OrderRestaurantDto;
 import com.app.myorder.entities.Restaurant;
 import org.modelmapper.ModelMapper;
 
@@ -13,6 +14,10 @@ public class RestaurantMapper {
 
     public static RestaurantFindResponseDto toFindResponseDto(Restaurant restaurant) {
         return modelMapper.map(restaurant, RestaurantFindResponseDto.class);
+    }
+
+    public static OrderRestaurantDto toOrderRestaurantDto(Restaurant restaurant) {
+        return modelMapper.map(restaurant, OrderRestaurantDto.class);
     }
 
 }
