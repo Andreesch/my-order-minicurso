@@ -39,7 +39,7 @@ public class UserController {
 
     @GetMapping(value = "/list")
     @ResponseStatus(HttpStatus.OK)
-    @ApiOperation(value = "${v1.restaurant.list}")
+    @ApiOperation(value = "${v1.user.list}")
     @ApiResponses({
             @ApiResponse(code = 200, message = "Sucesso", response = RestaurantResponseListDto.class)
     })

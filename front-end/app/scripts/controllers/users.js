@@ -1,20 +1,14 @@
 'use strict';
 
 var app = angular.module('myOrderApp')
-	.controller('RestaurantsCtrl', [ '$scope', '$store', 'flash', 'RestaurantListService', 'RestaurantService', '$timeout', function ($scope, $store, flash, restaurantListService, restaurantService, timeout) {
-    
-    // Bind localStorage to scope ( wrapper for $scope.$watch )
-    $store.bind( $scope, 'restaurants' );
+	.controller('UsersCtrl', [ '$scope', '$store', 'flash', 'UserListService', function ($scope, $store, flash, userListService) {
 
-  	// Get all restaurants from localStorage to scope
-  	$scope.restaurants = $store.get('restaurants');
+    // Create newUser
+    $scope.newUser = {};
 
-    // Create newRestaurant
-    $scope.newRestaurant = {};
-
-    $scope.loadRestaurants = function(){
-        restaurantListService.get(null, null, function(response){
-          $scope.restaurants = response.restaurants;
+    $scope.loadUsers = function(){
+        userListService.get(null, null, function(response){
+          $scope.users = response.users;
         }, function(response) {
           console.log(response);
         });
@@ -44,7 +38,7 @@ var app = angular.module('myOrderApp')
         // clean scope from newRestaurant
         $scope.newRestaurant = {};
 
-        $scope.loadRestaurants();
+        $scope.loadUsers();
       }, function(response){
         console.log(response);
       });
@@ -66,7 +60,7 @@ var app = angular.module('myOrderApp')
         // clean scope from newRestaurant
         $scope.newRestaurant = {};
 
-        $scope.loadRestaurants();
+        $scope.loadUsers();
       }, function(response){
         console.log(response);
       });
@@ -80,13 +74,13 @@ var app = angular.module('myOrderApp')
 
       restaurantService.delete({id: $scope.selectedRestaurantToRemove}, null, function(response){
         flash.success = 'Removido com sucesso.';
-        $scope.loadRestaurants();
+        $scope.loadUsers();
       }, function(response){
         console.log(response);
       });
     }
 
-    $scope.loadRestaurants();
+    $scope.loadUsers();
 
   	/*
   	 * Generate new Id

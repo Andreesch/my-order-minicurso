@@ -6,6 +6,9 @@ import io.swagger.annotations.ApiModelProperty;
 @ApiModel("CreateUserResponse")
 public class UserResponseDto {
 
+    @ApiModelProperty(value = "${user.create.id}")
+    private String id;
+
     @ApiModelProperty(value = "${user.create.name}")
     private String name;
 
@@ -20,6 +23,15 @@ public class UserResponseDto {
 
     @ApiModelProperty(value = "${user.create.phone}")
     private String phone;
+
+    public String getId() {
+        return id;
+    }
+
+    public UserResponseDto setId(String id) {
+        this.id = id;
+        return this;
+    }
 
     public String getName() {
         return name;
