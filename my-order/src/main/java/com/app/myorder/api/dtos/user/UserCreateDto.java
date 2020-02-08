@@ -6,7 +6,7 @@ import io.swagger.annotations.ApiModelProperty;
 import javax.validation.constraints.NotEmpty;
 
 @PasswordValidator
-public class CreateUserDto {
+public class UserCreateDto {
 
     @NotEmpty
     @ApiModelProperty(value = "${user.create.name}")
@@ -15,10 +15,6 @@ public class CreateUserDto {
     @NotEmpty
     @ApiModelProperty(value = "${user.create.email}")
     private String email;
-
-    @NotEmpty
-    @ApiModelProperty(value = "${user.create.federalIdentification}")
-    private String federalIdentification;
 
     @NotEmpty
     @ApiModelProperty(value = "${user.create.password}")
@@ -40,7 +36,7 @@ public class CreateUserDto {
         return name;
     }
 
-    public CreateUserDto setName(String name) {
+    public UserCreateDto setName(String name) {
         this.name = name;
         return this;
     }
@@ -49,17 +45,8 @@ public class CreateUserDto {
         return email;
     }
 
-    public CreateUserDto setEmail(String email) {
+    public UserCreateDto setEmail(String email) {
         this.email = email;
-        return this;
-    }
-
-    public String getFederalIdentification() {
-        return federalIdentification;
-    }
-
-    public CreateUserDto setFederalIdentification(String federalIdentification) {
-        this.federalIdentification = federalIdentification;
         return this;
     }
 
@@ -67,7 +54,7 @@ public class CreateUserDto {
         return password;
     }
 
-    public CreateUserDto setPassword(String password) {
+    public UserCreateDto setPassword(String password) {
         this.password = password;
         return this;
     }
@@ -76,7 +63,7 @@ public class CreateUserDto {
         return matchingPassword;
     }
 
-    public CreateUserDto setMatchingPassword(String matchingPassword) {
+    public UserCreateDto setMatchingPassword(String matchingPassword) {
         this.matchingPassword = matchingPassword;
         return this;
     }
@@ -85,7 +72,7 @@ public class CreateUserDto {
         return address;
     }
 
-    public CreateUserDto setAddress(String address) {
+    public UserCreateDto setAddress(String address) {
         this.address = address;
         return this;
     }
@@ -94,7 +81,7 @@ public class CreateUserDto {
         return phone;
     }
 
-    public CreateUserDto setPhone(String phone) {
+    public UserCreateDto setPhone(String phone) {
         this.phone = phone;
         return this;
     }

@@ -15,9 +15,6 @@ public class UserResponseDto {
     @ApiModelProperty(value = "${user.create.email}")
     private String email;
 
-    @ApiModelProperty(value = "${user.create.federalIdentification}")
-    private String federalIdentification;
-
     @ApiModelProperty(value = "${user.create.address}")
     private String address;
 
@@ -48,15 +45,6 @@ public class UserResponseDto {
 
     public UserResponseDto setEmail(String email) {
         this.email = email;
-        return this;
-    }
-
-    public String getFederalIdentification() {
-        return federalIdentification;
-    }
-
-    public UserResponseDto setFederalIdentification(String federalIdentification) {
-        this.federalIdentification = federalIdentification;
         return this;
     }
 

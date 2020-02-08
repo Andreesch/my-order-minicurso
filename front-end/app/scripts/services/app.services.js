@@ -38,3 +38,11 @@ appServices.factory('UserListService', ['$resource', function(resource) {
 		get: { method:'GET'}
 	});
 }]);
+
+appServices.factory('UserService', ['$resource', function(resource) {
+	return resource(domainURL + '/users', null, {
+		post: { method:'POST'},
+		put: {method: 'PUT'},
+		delete: {method: 'DELETE'}
+	});
+}]);

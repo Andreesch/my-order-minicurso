@@ -1,9 +1,10 @@
 package com.app.myorder.api.mappers;
 
 import com.app.myorder.api.dtos.order.ProductDto;
-import com.app.myorder.api.dtos.product.CreateProductDto;
+import com.app.myorder.api.dtos.product.ProductCreateDto;
 import com.app.myorder.api.dtos.product.ProductResponseDto;
 import com.app.myorder.api.dtos.product.ProductResponseListDto;
+import com.app.myorder.api.dtos.product.ProductUpdateDto;
 import com.app.myorder.entities.Product;
 import org.modelmapper.ModelMapper;
 
@@ -17,8 +18,12 @@ public class ProductMapper {
 
     };
 
-    public static Product toEntity(CreateProductDto createProductDto) {
-        return modelMapper.map(createProductDto, Product.class);
+    public static Product toEntity(ProductCreateDto productCreateDto) {
+        return modelMapper.map(productCreateDto, Product.class);
+    }
+
+    public static Product toEntity(ProductUpdateDto productCreateDto) {
+        return modelMapper.map(productCreateDto, Product.class);
     }
 
     public static ProductResponseDto toResponseDto(Product product){

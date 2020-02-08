@@ -1,6 +1,7 @@
 package com.app.myorder.services;
 
-import com.app.myorder.api.dtos.user.CreateUserDto;
+import com.app.myorder.api.dtos.user.UserCreateDto;
+import com.app.myorder.api.dtos.user.UserUpdateDto;
 import com.app.myorder.api.mappers.UserMapper;
 import com.app.myorder.config.Translator;
 import com.app.myorder.entities.User;
@@ -17,8 +18,8 @@ public class UserService {
     @Autowired
     private UserRepository userRepository;
 
-    public User createUser(CreateUserDto createUserDto) {
-        User user = UserMapper.toEntity(createUserDto);
+    public User createUser(UserCreateDto userCreateDto) {
+        User user = UserMapper.toEntity(userCreateDto);
 
         return userRepository.save(user);
     }
@@ -30,5 +31,15 @@ public class UserService {
 
     public List<User> listAll() {
         return userRepository.findAll();
+    }
+
+    public void updateUser(UserUpdateDto userUpdateDto) {
+        findUserById(userUpdateDto.getId());
+
+        userRepository.save(UserMapper.toEntity(userUpdateDto));
+    }
+
+    public void deleteUser(Integer userId) {
+        userRepository.delete(findUserById(userId));
     }
 }

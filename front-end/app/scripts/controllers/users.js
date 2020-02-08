@@ -1,7 +1,7 @@
 'use strict';
 
 var app = angular.module('myOrderApp')
-	.controller('UsersCtrl', [ '$scope', '$store', 'flash', 'UserListService', function ($scope, $store, flash, userListService) {
+	.controller('UsersCtrl', [ '$scope', '$store', 'flash', 'UserListService', 'UserService', function ($scope, $store, flash, userListService, userService) {
 
     // Create newUser
     $scope.newUser = {};
@@ -14,29 +14,58 @@ var app = angular.module('myOrderApp')
         });
     };
 
-    $scope.saveRestaurant = function() {
-      if($scope.newRestaurant.id) {
-        $scope.editRestaurant();
+    $scope.saveUser = function() {
+      if($scope.newUser.id) {
+        $scope.editUser();
       } else {
-        $scope.addRestaurant();
+        $scope.addUser();
       }
     }
 
-    $scope.addRestaurant = function() {
+    $scope.addUser = function() {
 
-      restaurantService.post(null, {
-        name: $scope.newRestaurant.name,
-        phone: $scope.newRestaurant.phone,
-        email: $scope.newRestaurant.email
+      userService.post(null, {
+        name: $scope.newUser.name,
+        phone: $scope.newUser.phone,
+        email: $scope.newUser.email,
+        password: $scope.newUser.password,
+        matchingPassword: $scope.newUser.matchingPassword,
+        address: $scope.newUser.address
       }, function(response){
-        flash.success = $scope.newRestaurant.name + ' foi atualizado com sucesso.';
+        flash.success = $scope.newUser.name + ' foi criado com sucesso.';
 
         // Close Modal (@todo find another 
         // way other than dom method in controller)
         // document.getElementById('restaurant-form').modal('hide');
 
-        // clean scope from newRestaurant
-        $scope.newRestaurant = {};
+        // clean scope from newUser
+        $scope.newUser = {};
+
+        $scope.loadUsers();
+      }, function(response){
+        console.log(response);
+        flash.error = 'Erro ao criar usuário.';
+      });
+    }
+
+    $scope.editUser = function() {     
+      userService.put(null, {
+        id: $scope.newUser.id,
+        name: $scope.newUser.name,
+        phone: $scope.newUser.phone,
+        email: $scope.newUser.email,
+        password: $scope.newUser.password,
+        matchingPassword: $scope.newUser.matchingPassword,
+        address: $scope.newUser.address
+      }, function(response){
+        flash.success = $scope.newUser.name + ' foi atualizado com sucesso.';
+
+        // Close Modal (@todo find another 
+        // way other than dom method in controller)
+        // document.getElementById('restaurant-form').modal('hide');
+
+        // clean scope from newUser
+        $scope.newUser = {};
 
         $scope.loadUsers();
       }, function(response){
@@ -44,35 +73,13 @@ var app = angular.module('myOrderApp')
       });
     }
 
-    $scope.editRestaurant = function() {     
-      restaurantService.put(null, {
-        id: $scope.newRestaurant.id,
-        name: $scope.newRestaurant.name,
-        phone: $scope.newRestaurant.phone,
-        email: $scope.newRestaurant.email
-      }, function(response){
-        flash.success = $scope.newRestaurant.name + ' foi atualizado com sucesso.';
-
-        // Close Modal (@todo find another 
-        // way other than dom method in controller)
-        // document.getElementById('restaurant-form').modal('hide');
-
-        // clean scope from newRestaurant
-        $scope.newRestaurant = {};
-
-        $scope.loadUsers();
-      }, function(response){
-        console.log(response);
-      });
+    $scope.selectUserToRemove = function(id) {
+      $scope.selectedUserToRemove = id;
     }
 
-    $scope.selectRestaurantToRemove = function(id) {
-      $scope.selectedRestaurantToRemove = id;
-    }
+    $scope.removeUser = function() {
 
-    $scope.removeRestaurant = function() {
-
-      restaurantService.delete({id: $scope.selectedRestaurantToRemove}, null, function(response){
+      userService.delete({id: $scope.selectedUserToRemove}, null, function(response){
         flash.success = 'Removido com sucesso.';
         $scope.loadUsers();
       }, function(response){
@@ -88,7 +95,7 @@ var app = angular.module('myOrderApp')
   	 * the webservice will assign new ids
   	 */
   	var newId = function () {
-  		return $scope.restaurants.length + 1;
+  		return $scope.users.length + 1;
   	};
 
   	/*
@@ -97,10 +104,10 @@ var app = angular.module('myOrderApp')
   	$scope.edit = function(id) {
   		
     	//search restaurants with given id
-        for(var i in $scope.restaurants) {
-            if($scope.restaurants[i].id == id) {
+        for(var i in $scope.users) {
+            if($scope.users[i].id == id) {
                 //copy of originial object to scope object
-                $scope.newRestaurant = angular.copy($scope.restaurants[i]);
+                $scope.newUser = angular.copy($scope.users[i]);
             }
         }
     };

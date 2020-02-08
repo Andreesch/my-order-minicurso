@@ -1,8 +1,9 @@
 package com.app.myorder.api.mappers;
 
-import com.app.myorder.api.dtos.user.CreateUserDto;
+import com.app.myorder.api.dtos.user.UserCreateDto;
 import com.app.myorder.api.dtos.user.UserResponseDto;
 import com.app.myorder.api.dtos.user.UserResponseListDto;
+import com.app.myorder.api.dtos.user.UserUpdateDto;
 import com.app.myorder.entities.User;
 import org.modelmapper.ModelMapper;
 
@@ -15,8 +16,12 @@ public class UserMapper {
     private UserMapper(){
     };
 
-    public static User toEntity(CreateUserDto createUserDto) {
-        return modelMapper.map(createUserDto, User.class);
+    public static User toEntity(UserCreateDto userCreateDto) {
+        return modelMapper.map(userCreateDto, User.class);
+    }
+
+    public static User toEntity(UserUpdateDto userCreateDto) {
+        return modelMapper.map(userCreateDto, User.class);
     }
 
     public static UserResponseDto toResponseDto(User user) {

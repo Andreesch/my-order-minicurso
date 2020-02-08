@@ -1,6 +1,6 @@
 package com.app.myorder.api.validations;
 
-import com.app.myorder.api.dtos.user.CreateUserDto;
+import com.app.myorder.api.dtos.user.UserCreateDto;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
@@ -13,7 +13,7 @@ public class PasswordMatchesValidator implements ConstraintValidator<PasswordVal
 
     @Override
     public boolean isValid(Object obj, ConstraintValidatorContext context) {
-        CreateUserDto user = (CreateUserDto) obj;
+        UserCreateDto user = (UserCreateDto) obj;
         return user.getPassword().equals(user.getMatchingPassword());
     }
 }
