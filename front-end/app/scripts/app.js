@@ -33,6 +33,10 @@ angular
         templateUrl: 'views/restaurants/restaurants.html',
         controller: 'RestaurantsCtrl'
       })
+      .when('/products', {
+        templateUrl: 'views/products/products.html',
+        controller: 'ProductsCtrl'
+      })
       .when('/orders', {
         templateUrl: 'views/orders/orders.html',
         controller: 'OrdersCtrl'

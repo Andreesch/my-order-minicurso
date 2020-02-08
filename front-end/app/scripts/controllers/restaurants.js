@@ -4,10 +4,10 @@ var app = angular.module('myOrderApp')
 	.controller('RestaurantsCtrl', [ '$scope', '$store', 'flash', 'RestaurantListService', 'RestaurantService', function ($scope, $store, flash, restaurantListService, restaurantService) {
     
     // Bind localStorage to scope ( wrapper for $scope.$watch )
-    $store.bind( $scope, 'restaurants' );
+    //$store.bind( $scope, 'restaurants' );
 
   	// Get all restaurants from localStorage to scope
-  	$scope.restaurants = $store.get('restaurants');
+  	//$scope.restaurants = $store.get('restaurants');
 
     // Create newRestaurant
     $scope.newRestaurant = {};
@@ -46,6 +46,7 @@ var app = angular.module('myOrderApp')
 
         $scope.loadRestaurants();
       }, function(response){
+        flash.error = 'Erro ao salvar restaurante.';
         console.log(response);
       });
     }
@@ -68,6 +69,7 @@ var app = angular.module('myOrderApp')
 
         $scope.loadRestaurants();
       }, function(response){
+        flash.error = 'Erro ao salvar restaurante.';
         console.log(response);
       });
     }
@@ -82,20 +84,12 @@ var app = angular.module('myOrderApp')
         flash.success = 'Removido com sucesso.';
         $scope.loadRestaurants();
       }, function(response){
+        flash.error = 'Erro ao remover restaurante.';
         console.log(response);
       });
     }
 
     $scope.loadRestaurants();
-
-  	/*
-  	 * Generate new Id
-  	 * @notes This shouldn't happen if using a webservice,
-  	 * the webservice will assign new ids
-  	 */
-  	var newId = function () {
-  		return $scope.restaurants.length + 1;
-  	};
 
   	/*
   	 * Edit restaurant by id 

@@ -1,0 +1,203 @@
+<div class="row">
+	
+	<!-- Flash Messages -->
+	<div ng-include="'views/partials/messages.html'" ></div>
+
+	<header class="page-header clearfix">
+		<h3 class="pull-left">Produtos</h3>
+		<br>
+		<div class="btn-group pull-right">
+			<button class="btn btn-default" ng-click="newProduct = null;" data-toggle="modal" data-target="#product-form">
+				<span class="glyphicon glyphicon-plus-sign"></span>
+				Adicionar Produto
+			</button>
+			<buttom class="btn btn-warning" ng-click="loadProducts()">
+				<span class="glyphicon glyphicon-repeat"></span>
+				Recarregar
+			</buttom>
+		</div>	
+	</header>
+	
+	<div class="jumbotron empty" ng-hide="products.length">
+	  <h1>Sem produtos?</h1>
+	  <p class="lead">
+	    Você pode adicionar abaixo...
+	  </p>
+	  <p>
+	  	<button 
+	  		class="btn btn-lg btn-primary" 
+	  		data-toggle="modal" 
+	  		ng-click="newProduct = {}; productForm.$setPristine();" 
+	  		data-target="#product-form">
+	  		<span class="glyphicon glyphicon-cutlery"></span>
+	  		Adicionar produto
+	  	</button>
+	  </p>
+	</div>
+
+	<table class="table table-hover" ng-show="products.length">
+
+		<tbody>
+			<tr class="repeated-item" ng-repeat="product in products track by product.id">
+				<td>{{product.id}}</td>
+				<td>{{product.name}}</td>
+				<td>{{product.description}}</td>
+				<td>{{product.restaurant.name}}</td>
+				<td>{{product.value | currency : "R$ " : 2}}</td>
+				<td>
+					<div class="btn-group pull-right">
+						<button ng-click="edit(products[$index].id)" data-toggle="modal" data-target="#product-form" class="btn btn-sm btn-primary">
+						<span class="glyphicon glyphicon-edit"></span>
+						Editar
+						</button> 
+						
+						<button class="btn btn-sm btn-danger" data-toggle="modal" data-target="#warning-modal" ng-click="selectProductToRemove(products[$index].id)">
+						<span class="glyphicon glyphicon-trash"></span>
+						</button>
+					</div>
+
+				</td>
+			</tr>
+		</tbody>
+
+	</table>
+</div>
+
+
+<!-- product Form Modal -->
+<div 
+	class="modal fade" 
+	id="product-form" 
+	data-backdrop="static" 
+	data-keyboard="false" 
+	role="dialog" 
+	aria-labelledby="product-form" 
+	aria-hidden="true">
+
+	<div class="modal-dialog">
+	  <div class="modal-content">
+	    <div class="modal-header">
+	      <h4 class="modal-title"> 
+	        <span ng-hide="newProduct.id">Novo</span>
+	        <span ng-show="newProduct.id">Editar:</span>
+	        {{newProduct.name}}
+	        </h4>
+	    </div>
+	    <div class="modal-body">
+	      
+	        <form ng-submit="" name="productForm" id="productForm" novalidate>
+	        	
+	        	<div class="form-group">
+		        	<div class="input-group">
+		        		<span class="input-group-addon">
+		        			<span class="glyphicon glyphicon-cutlery"></span>
+		        		</span>
+						<input 
+							placeholder="Nome"
+							type="text" 
+							class="form-control" 
+							name="name" 
+							id="name" 
+							ng-model="newProduct.name" 
+							required >
+					</div>
+					<span class="help-block" ng-show="productForm.name.$dirty && productForm.name.$invalid">
+						Digite o nome do produto.
+					</span>
+				</div>
+
+	        	<div class="form-group">
+		        	<div class="input-group">
+		        		<span class="input-group-addon">
+		        			<span class="glyphicon glyphicon-cutlery"></span>
+		        		</span>
+						<input 
+							placeholder="Descrição"
+							type="text" 
+							class="form-control" 
+							name="description" 
+							id="description" 
+							ng-model="newProduct.description" 
+							required >
+					</div>
+					<span class="help-block" ng-show="productForm.description.$dirty && productForm.description.$invalid">
+						Digite a descrição do produto.
+					</span>
+				</div>
+
+	        	<div class="form-group">
+		        	<div class="input-group">
+		        		<span class="input-group-addon">
+		        			<span class="glyphicon glyphicon-cutlery"></span>
+		        		</span>
+						<input 
+							placeholder="Valor"
+							type="number" 
+							class="form-control" 
+							name="value" 
+							id="value" 
+							ng-model="newProduct.value" 
+							required >
+					</div>
+					<span class="help-block" ng-show="productForm.value.$dirty && productForm.value.$invalid">
+						Digite o valor do produto.
+					</span>
+				</div>
+
+				<div class="form-group">
+		        	<div class="input-group">
+		        		<span class="input-group-addon">
+		        			<span class="glyphicon glyphicon-cutlery"></span>
+		        		</span>
+						<select
+							type="text"
+							ng-hide="newProduct.edit"
+							class="form-control" 
+							name="productRest" 
+							id="productRest" 
+							ng-model="newProduct.restaurant"
+							ng-options="restaurant.name for restaurant in restaurants" 
+							required >
+
+						</select>
+						<input 
+							type="text" 
+							ng-model="newProduct.restaurant.name"
+							ng-disabled="newProduct.edit" 
+							ng-show="newProduct.edit"
+							class="form-control"
+							name="productRest" 
+							id="productRest"
+							required>
+					</div>
+					<span class="help-block" ng-show="productForm.productRest.$invalid">
+						Selecione um restaurante na lista.
+					</span>
+				</div>
+	  	
+	         	<input type="hidden" ng-model="newProduct.id">
+
+	        </form>
+	     
+	    </div>
+	    <div class="modal-footer">
+	      <button ng-click="newProduct = {}; productForm.$setPristine();" type="button" data-dismiss="modal" class="btn btn-default pull-left">Cancelar</button>
+	      
+	      <button type="button" class="btn btn-success" data-dismiss="modal" ng-disabled="productForm.$pristine || productForm.$invalid" ng-click="saveProduct()">Salvar</button>
+
+	    </div>
+	  </div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+</div>
+
+
+
+<!-- Warining Modal -->
+<div class="modal fade"
+	role="dialog" 
+	aria-labelledby="warning-modal"
+	data-backdrop="static" 
+	aria-hidden="true" 
+	id="warning-modal"
+	ng-include="'views/products/warning.products.html'">
+</div>
