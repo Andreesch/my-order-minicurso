@@ -7,7 +7,7 @@
 		<h3 class="pull-left">Restaurantes</h3>
 		<br>
 		<div class="btn-group pull-right">
-			<button class="btn btn-default" ng-click="newRestaurant = null;" data-toggle="modal" data-target="#restaurant-form">
+			<button class="btn btn-default" ng-click="newRestaurant = {};restForm.$setPristine();" data-toggle="modal" data-target="#restaurant-form">
 				<span class="glyphicon glyphicon-plus-sign"></span>
 				Adicionar Restaurante
 			</button>

@@ -1,77 +1,92 @@
 'use strict';
 
 angular.module('myOrderApp')
-  .controller('OrdersCtrl', [ '$scope', '$store', 'flash', function ($scope, $store, flash) {
+  .controller('OrdersCtrl', [ '$scope', '$store', 'flash', 'RestaurantListService', 'RestaurantService', 'ProductListService', 'ProductService', 'OrderListService', 'OrderService', 'UserListService', function ($scope, $store, flash, restaurantListService, restaurantService, productListService, productService, orderListService, orderService, userListService) {
     
-    // Get Orders List
-    $scope.orders = $store.get('orders');
+    $scope.orders = [];
+    $scope.restaurants = [];
+    $scope.products = [];
+    $scope.users = [];
 
-    // Get restaurants list
-    $scope.restaurants = $store.get('restaurants');
+    $scope.newOrder = {};
+    $scope.newOrder.items = [];
 
-    // Bind localStorage to scope ( wrapper for $scope.$watch )
-    $store.bind( $scope, 'orders' );
+    $scope.loadRestaurants = function(){
+        restaurantListService.get(null, null, function(response){
+          $scope.restaurants = response.restaurants;
+        }, function(response) {
+          flash.error = 'Erro ao carregar restaurantes.';
+          console.log(response);
+        });
+    };
 
-    // Bind localStorage to scope ( wrapper for $scope.$watch )
-    $store.bind( $scope, 'restaurants' );
+    $scope.loadProducts = function(){
+        productListService.get(null, null, function(response){
+          $scope.products = response.products;
+        }, function(response) {
+          console.log(response);
+        });
+    };
 
+    $scope.loadUsers = function(){
+        userListService.get(null, null, function(response){
+          $scope.users = response.users;
+        }, function(response) {
+          console.log(response);
+        });
+    };
 
-    // If no orders make sure it's an empty array
-    // to be able to generate new ids from the array length
-    if( !$scope.orders ) {
-      $scope.orders = [];
+    $scope.loadOrders = function() {
+      orderListService.get(null, null, function(response){
+        $scope.orders = response.orders;
+      }, function(response) {
+        flash.error = 'Erro ao carregar pedidos.';
+        console.log(response);
+      });
     }
 
+    $scope.addOrder = function() {
 
-    /*
-     * Generate new Id
-     * @notes This shouldn't happen if using a webservice,
-     * the webservice will assign new ids
-     */
-    var newId = function () {
-      
-      return $scope.orders.length + 1;
+      var items = [];
+      angular.forEach($scope.newOrder.items, function(item) {
+        items.push({
+          itemId: item.product.id,
+          quantity: item.quantity
+        });
+      });
 
-    };
+      orderService.post(null, {
+        userId: $scope.newOrder.user.id,
+        restaurantId: $scope.newOrder.restaurant.id,
+        items: $scope.newOrder.items
+      }, function(response){
+        flash.success = 'Pedido adicionado com sucesso.';
+        // clean scope from newOrder
+        $scope.newOrder = {items:[]};
 
-    /*
-     * Add New Restaurant
-     */
-    $scope.save = function () {
+        $scope.loadProducts();
+      }, function(response){
+        flash.error = 'Erro ao salvar produto.';
+        console.log(response);
+      });
+    }
 
-      // Generate new id and assign it
-      $scope.newOrder.id = newId();
+    $scope.addItem = function() {
+      debugger;
+      var newItem = {};
+      angular.copy($scope.newItem, newItem);
+      $scope.newOrder.items.push(newItem);
 
-      // Save Order Date 
-      $scope.newOrder.date = new Date();
+      $scope.newItem = {};
+    }
 
-      // Push new order in array
-      $scope.orders.push($scope.newOrder);
+    $scope.removeItem = function(index) {
 
-      // Show flash message
-      flash.success =  'New order was placed successfully.';
+      $scope.newOrder.items.splice(index, 1);
+    }
 
-    };
-
-    /*
-     * Reorder Old Order
-     */
-    $scope.reorder = function (oldOrder) {
-
-      // Create empty order
-      $scope.newOrder = {};
-
-      // Set a reorder flag
-      $scope.newOrder.reorder = true;
-
-      // Copy Restaurant and Order Details only from old order.
-      $scope.newOrder.restaurant = oldOrder.restaurant;
-      $scope.newOrder.details = oldOrder.details;
-
-      // Also set the form to dirty to be able 
-      // to submit without changing anything
-      $scope.orderForm.$setDirty();
-
-    };
+    $scope.loadOrders();
+    $scope.loadRestaurants();
+    $scope.loadProducts();
 
   }]);

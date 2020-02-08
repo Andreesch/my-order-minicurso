@@ -7,7 +7,7 @@
 		<h3 class="pull-left">Histórico de pedidos</h3>
 		<br>
 		<div class="btn-group pull-right">
-			<button class="btn btn-primary" data-toggle="modal" ng-click="newOrder = {}; orderForm.$setPristine();" data-target="#newOrderForm">
+			<button class="btn btn-primary" data-toggle="modal" ng-click="newOrder = {items:[]};orderForm.$setPristine();" data-target="#newOrderForm">
 				<span class="glyphicon glyphicon-plus-sign"></span>
 				Novo pedido
 			</button>
@@ -43,22 +43,24 @@
 		<thead>
 			<tr>
 				<th>#</th>
-				<th>Data pedido</th>
-				<th>Detalhes</th>
+				<th>ID</th>
 				<th>Restaurante</th>
+				<th>Usuário</th>
+				<th>Valor</th>
+				<th>Estado</th>
 				<th></th>
 			</tr>
 		</thead>
 		<tbody>
 			<tr ng-repeat="order in orders | filter:searchOrders track by order.id" class="repeated-item">
 				<td>{{order.id}}</td>
-				<td>{{order.date | date}}</td>
-				<td>
-					{{order.details}}
-				</td>
-				<td>
-					{{order.restaurant.name}}
-				</td>
+				<td>{{order.restaurant.name}}</td>
+				<td>{{order.user.name}}</td>
+				<td>{{order.totalValue}}</td>
+				<td ng-if="order.orderStatus == 'OPEN'">Em aberto</td>
+				<td ng-if="order.orderStatus == 'CONFIRMED'">Confirmado</td>
+				<td ng-if="order.orderStatus == 'IN_DELIVERY'">Em entrega</td>
+				<td ng-if="order.orderStatus == 'DELIVERED'">Entregue</td>
 				<td>
 					<div class="btn-group pull-right">
 						<button 
@@ -68,7 +70,7 @@
 							class="btn btn-sm btn-success">
 
 							<span class="glyphicon glyphicon-refresh"></span>
-							Refazer
+							Atualizar
 						</button>
 					</div>
 
@@ -135,29 +137,121 @@
 				</div>
 
 				<div class="form-group">
-					<textarea 
-						placeholder="Order Details"
-						class="form-control" 
-						name="orderDetails" 
-						id="orderDetails" 
-						ng-model="newOrder.details" 
-						required 
-						rows="3">
-					</textarea>
+		        	<div class="input-group">
+		        		<span class="input-group-addon">
+		        			<span class="glyphicon glyphicon-user"></span>
+		        		</span>
+						<select
+							type="text"
+							ng-hide="newOrder.reorder"
+							class="form-control" 
+							name="orderRest" 
+							id="orderRest" 
+							ng-model="newOrder.user"
+							ng-options="user.name for user in users" 
+							required >
 
-					<span class="help-block" ng-show="orderForm.orderDetails.$dirty && orderForm.orderDetails.$invalid">
-						Cadastre os dados do pedido.
+						</select>
+						<input 
+							type="text" 
+							ng-model="newOrder.user.name" 
+							ng-disabled="newOrder.reorder" 
+							ng-show="newOrder.reorder"
+							class="form-control"
+							name="orderRest" 
+							id="orderRest"
+							required>
+					</div>
+					<span class="help-block" ng-show="orderForm.orderRest.$invalid">
+						Selecione um usuário na lista.
 					</span>
-
 				</div>
 
+				<table class="table table-hover">
+					<thead>
+						<tr>
+							<th>Produto</th>
+							<th>Valor</th>
+							<th>Quantidade</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr ng-repeat="item in newOrder.items" class="repeated-item">
+							<td>{{item.product.name}}</td>
+							<td>{{item.product.value|currency:"R$ ":2}}</td>
+							<td>{{item.quantity}}</td>
+							<td>
+								<div class="btn-group pull-right">
+									<button 
+										ng-click="removeItem($index)" 
+										class="btn btn-sm btn-success">
+
+										<span class="glyphicon glyphicon-refresh"></span>
+										Remover
+									</button>
+								</div>
+
+							</td>
+						</tr>
+
+						<tr class="repeated-item">
+							<td>
+								<div class="input-group">
+									<select
+										type="text"
+										class="form-control" 
+										name="productRest" 
+										id="productRest" 
+										ng-model="newItem.product"
+										ng-options="product.name for product in products" 
+										required >
+									</select>
+								</div>
+							</td>
+							<td><input 
+								type="text" 
+								ng-model='newItem.product.value|currency:"R$ ":2'
+								class="form-control"
+								disabled
+								name="itemValue" 
+								id="itemValue"
+								required>
+							<td>								
+								<div class="form-group">
+						        	<div class="input-group">
+										<input 
+											placeholder="Quantidade"
+											type="number"
+											class="form-control" 
+											name="itemQuantity" 
+											id="itemQuantity" 
+											ng-model="newItem.quantity">
+									</div>
+								</div>
+							</td>
+							<td>
+								<div class="btn-group pull-right">
+									<button 
+										ng-click="addItem()"
+										class="btn btn-sm btn-success">
+
+										<span class="glyphicon glyphicon-refresh"></span>
+										Adicionar
+									</button>
+								</div>
+
+							</td>
+						</tr>
+					</tbody>
+
+				</table>
 	        </form>
 	     
 	    </div>
 	    <div class="modal-footer">
-	      <button ng-click="newOrder = {}; orderForm.$setPristine();" type="button" data-dismiss="modal" class="btn btn-default pull-left">Cancelar</button>
+	      <button ng-click="newOrder = {items:[]};orderForm.$setPristine();" type="button" data-dismiss="modal" class="btn btn-default pull-left">Cancelar</button>
 	      
-	      <button type="button" class="btn btn-success" ng-disabled="orderForm.$pristine || orderForm.$invalid" ng-click="save()" data-dismiss="modal">
+	      <button type="button" class="btn btn-success" ng-disabled="orderForm.$pristine || orderForm.$invalid" ng-click="addOrder()" data-dismiss="modal">
 			<span class="glyphicon glyphicon-shopping-cart"></span>
 	      	Pedido
 	      </button>
