@@ -13,6 +13,9 @@ public class Product {
     @Column(name = "NAME", nullable = false)
     private String name;
 
+    @Column(name = "DESCRIPTION", nullable = false)
+    private String description;
+
     @Column(name = "VALUE", nullable = false)
     private Double value;
 
@@ -35,6 +38,15 @@ public class Product {
 
     public Product setName(String name) {
         this.name = name;
+        return this;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public Product setDescription(String description) {
+        this.description = description;
         return this;
     }
 

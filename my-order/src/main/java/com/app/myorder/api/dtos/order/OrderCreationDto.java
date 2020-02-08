@@ -1,5 +1,6 @@
-package com.app.myorder.api.dtos;
+package com.app.myorder.api.dtos.order;
 
+import com.app.myorder.api.dtos.OrderItemCreationDto;
 import io.swagger.annotations.ApiModelProperty;
 
 import javax.validation.constraints.NotEmpty;

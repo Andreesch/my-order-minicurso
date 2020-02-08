@@ -1,7 +1,9 @@
 package com.app.myorder.api.controllers;
 
-import com.app.myorder.api.dtos.OrderCreationDto;
-import com.app.myorder.api.dtos.OrderResponseDto;
+import com.app.myorder.api.dtos.order.OrderCreationDto;
+import com.app.myorder.api.dtos.order.OrderResponseDto;
+import com.app.myorder.api.dtos.order.OrderResponseListDto;
+import com.app.myorder.api.dtos.order.OrderStatusChangeDto;
 import com.app.myorder.api.dtos.restaurant.RestaurantResponseDto;
 import com.app.myorder.api.mappers.OrderMapper;
 import com.app.myorder.services.OrderService;
@@ -14,7 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @RestController("OrderController")
-@RequestMapping(RestPath.BASE_PATH + "/orders")
+@RequestMapping(RestPath.BASE_PATH + "/order")
 @Api(tags = "Orders")
 public class OrderController {
 
@@ -33,7 +35,7 @@ public class OrderController {
         return OrderMapper.toResponseDto(orderService.create(orderCreationDto));
     }
 
-    @GetMapping(value = "/{order}")
+    @GetMapping(value = "/find")
     @ResponseStatus(HttpStatus.OK)
     @ApiOperation(value = "${v1.order.find}")
     @ApiResponses({
@@ -42,6 +44,28 @@ public class OrderController {
     public OrderResponseDto findById(
             @ApiParam(value = "${v1.order.code}", required = true) @RequestParam("code") Integer code) {
         return OrderMapper.toFindResponseDto(orderService.find(code));
+    }
+
+    @GetMapping(value = "/list")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "${v1.order.list}")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Sucesso", response = OrderResponseListDto.class)
+    })
+    public OrderResponseListDto list() {
+        return OrderMapper.toOrderResponseListDto(
+                orderService.listAll());
+    }
+
+    @ResponseStatus(HttpStatus.OK)
+    @PostMapping(value="/update", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiOperation(value = "${v1.order.status.update}")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Atualizado com sucesso", response = OrderResponseDto.class)
+    })
+    public void update(
+            @ApiParam(value = "${v1.order}", required = true) @RequestBody @Valid OrderStatusChangeDto orderStatusChangeDto) {
+        orderService.updateOrderStatus(orderStatusChangeDto);
     }
 
 }

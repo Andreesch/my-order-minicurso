@@ -1,6 +1,6 @@
 package com.app.myorder.services;
 
-import com.app.myorder.api.dtos.CreateRestaurantDto;
+import com.app.myorder.api.dtos.restaurant.CreateRestaurantDto;
 import com.app.myorder.api.dtos.UpdateRestaurantDto;
 import com.app.myorder.config.Translator;
 import com.app.myorder.entities.Restaurant;
@@ -43,5 +43,9 @@ public class RestaurantService {
 
     public List<Restaurant> listAll() {
         return restaurantRepository.findAll();
+    }
+
+    public void deleteRestaurant(Integer id) {
+        restaurantRepository.delete(findRestaurantById(id));
     }
 }

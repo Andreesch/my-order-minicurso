@@ -1,4 +1,4 @@
-package com.app.myorder.api.dtos;
+package com.app.myorder.api.dtos.product;
 
 import io.swagger.annotations.ApiModelProperty;
 
