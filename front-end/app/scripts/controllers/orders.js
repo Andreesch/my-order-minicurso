@@ -1,6 +1,6 @@
 'use strict';
 
-angular.module('orderMeApp')
+angular.module('myOrderApp')
   .controller('OrdersCtrl', [ '$scope', '$store', 'flash', function ($scope, $store, flash) {
     
     // Get Orders List
