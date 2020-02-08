@@ -8,7 +8,7 @@ import javax.validation.constraints.NotNull;
 public class CreateProductDto {
 
     @NotEmpty
-    @ApiModelProperty(value = "${product.create.name}")
+    @ApiModelProperty(value = "${order.create.name}")
     private String name;
 
     @NotEmpty

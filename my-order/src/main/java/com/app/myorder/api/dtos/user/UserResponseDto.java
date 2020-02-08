@@ -1,10 +1,10 @@
-package com.app.myorder.api.dtos;
+package com.app.myorder.api.dtos.user;
 
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 
 @ApiModel("CreateUserResponse")
-public class CreateUserResponseDto {
+public class UserResponseDto {
 
     @ApiModelProperty(value = "${user.create.name}")
     private String name;
@@ -25,7 +25,7 @@ public class CreateUserResponseDto {
         return name;
     }
 
-    public CreateUserResponseDto setName(String name) {
+    public UserResponseDto setName(String name) {
         this.name = name;
         return this;
     }
@@ -34,7 +34,7 @@ public class CreateUserResponseDto {
         return email;
     }
 
-    public CreateUserResponseDto setEmail(String email) {
+    public UserResponseDto setEmail(String email) {
         this.email = email;
         return this;
     }
@@ -43,7 +43,7 @@ public class CreateUserResponseDto {
         return federalIdentification;
     }
 
-    public CreateUserResponseDto setFederalIdentification(String federalIdentification) {
+    public UserResponseDto setFederalIdentification(String federalIdentification) {
         this.federalIdentification = federalIdentification;
         return this;
     }
@@ -52,7 +52,7 @@ public class CreateUserResponseDto {
         return address;
     }
 
-    public CreateUserResponseDto setAddress(String address) {
+    public UserResponseDto setAddress(String address) {
         this.address = address;
         return this;
     }
@@ -61,7 +61,7 @@ public class CreateUserResponseDto {
         return phone;
     }
 
-    public CreateUserResponseDto setPhone(String phone) {
+    public UserResponseDto setPhone(String phone) {
         this.phone = phone;
         return this;
     }

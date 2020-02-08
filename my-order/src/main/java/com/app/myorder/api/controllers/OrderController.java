@@ -1,7 +1,8 @@
 package com.app.myorder.api.controllers;
 
 import com.app.myorder.api.dtos.OrderCreationDto;
-import com.app.myorder.api.dtos.OrderCreationResponseDto;
+import com.app.myorder.api.dtos.OrderResponseDto;
+import com.app.myorder.api.dtos.restaurant.RestaurantResponseDto;
 import com.app.myorder.api.mappers.OrderMapper;
 import com.app.myorder.services.OrderService;
 import io.swagger.annotations.*;
@@ -24,13 +25,23 @@ public class OrderController {
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiOperation(value = "${v1.order.create}")
     @ApiResponses({
-            @ApiResponse(code = 201, message = "Criado com sucesso", response = OrderCreationResponseDto.class),
+            @ApiResponse(code = 201, message = "Criado com sucesso", response = OrderResponseDto.class),
             @ApiResponse(code = 404, message = "Rest path não encontrado")
     })
-    public OrderCreationResponseDto create(
+    public OrderResponseDto create(
             @ApiParam(value = "${v1.order}", required = true) @RequestBody @Valid OrderCreationDto orderCreationDto) {
-        return OrderMapper
-                .toResponseDto(orderService.create(orderCreationDto));
+        return OrderMapper.toResponseDto(orderService.create(orderCreationDto));
+    }
+
+    @GetMapping(value = "/{order}")
+    @ResponseStatus(HttpStatus.OK)
+    @ApiOperation(value = "${v1.order.find}")
+    @ApiResponses({
+            @ApiResponse(code = 200, message = "Sucesso", response = RestaurantResponseDto.class)
+    })
+    public OrderResponseDto findById(
+            @ApiParam(value = "${v1.order.code}", required = true) @RequestParam("code") Integer code) {
+        return OrderMapper.toFindResponseDto(orderService.find(code));
     }
 
 }

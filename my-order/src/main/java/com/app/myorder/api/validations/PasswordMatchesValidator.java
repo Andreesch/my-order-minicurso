@@ -1,6 +1,6 @@
 package com.app.myorder.api.validations;
 
-import com.app.myorder.api.dtos.CreateUserDto;
+import com.app.myorder.api.dtos.user.CreateUserDto;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

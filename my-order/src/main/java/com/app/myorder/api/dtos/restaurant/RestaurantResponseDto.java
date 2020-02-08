@@ -1,8 +1,8 @@
-package com.app.myorder.api.dtos;
+package com.app.myorder.api.dtos.restaurant;
 
 import io.swagger.annotations.ApiModelProperty;
 
-public class RestaurantFindResponseDto {
+public class RestaurantResponseDto {
 
     @ApiModelProperty(value = "${restaurant.find.id}")
     private Integer id;
@@ -20,7 +20,7 @@ public class RestaurantFindResponseDto {
         return id;
     }
 
-    public RestaurantFindResponseDto setId(Integer id) {
+    public RestaurantResponseDto setId(Integer id) {
         this.id = id;
         return this;
     }
@@ -29,7 +29,7 @@ public class RestaurantFindResponseDto {
         return name;
     }
 
-    public RestaurantFindResponseDto setName(String name) {
+    public RestaurantResponseDto setName(String name) {
         this.name = name;
         return this;
     }
@@ -38,7 +38,7 @@ public class RestaurantFindResponseDto {
         return phone;
     }
 
-    public RestaurantFindResponseDto setPhone(String phone) {
+    public RestaurantResponseDto setPhone(String phone) {
         this.phone = phone;
         return this;
     }
@@ -47,7 +47,7 @@ public class RestaurantFindResponseDto {
         return email;
     }
 
-    public RestaurantFindResponseDto setEmail(String email) {
+    public RestaurantResponseDto setEmail(String email) {
         this.email = email;
         return this;
     }
