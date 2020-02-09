@@ -22,5 +22,5 @@ Projeto desenvolvido para o minicurso de Spring Boot + Java 8 (UDESC-CCT).
 * https://www.linkedin.com/in/ronaldo-ferreira-leite-de-lima-42471710a/
 
 ## Créditos
-* Jonathn Hindi, modelo de aplicação front-end base
+* Jonathan Hindi, modelo de aplicação front-end base
 https://github.com/JonathanHindi/Order-Me
