@@ -18,8 +18,8 @@ Projeto desenvolvido para o minicurso de Spring Boot + Java 8 (UDESC-CCT).
 - Grunt;
 
 ## Social
-https://www.linkedin.com/in/andreeschneider/
-https://www.linkedin.com/in/ronaldo-ferreira-leite-de-lima-42471710a/
+* https://www.linkedin.com/in/andreeschneider/
+* https://www.linkedin.com/in/ronaldo-ferreira-leite-de-lima-42471710a/
 
 ## Créditos
 * Jonathn Hindi, modelo de aplicação front-end base
