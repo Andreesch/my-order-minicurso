@@ -42,7 +42,6 @@
 	<table class="table table-hover" ng-show="orders.length">
 		<thead>
 			<tr>
-				<th>#</th>
 				<th>ID</th>
 				<th>Restaurante</th>
 				<th>Usuário</th>
@@ -56,7 +55,7 @@
 				<td>{{order.id}}</td>
 				<td>{{order.restaurant.name}}</td>
 				<td>{{order.user.name}}</td>
-				<td>{{order.totalValue}}</td>
+				<td>{{order.totalValue | currency:"R$ ":2}}</td>
 				<td ng-if="order.orderStatus == 'OPEN'">Em aberto</td>
 				<td ng-if="order.orderStatus == 'CONFIRMED'">Confirmado</td>
 				<td ng-if="order.orderStatus == 'IN_DELIVERY'">Em entrega</td>
@@ -64,13 +63,11 @@
 				<td>
 					<div class="btn-group pull-right">
 						<button 
-							ng-click="reorder(order)" 
-							data-toggle="modal" 
-							data-target="#newOrderForm" 
+							ng-click="confirmOrder(order)"
 							class="btn btn-sm btn-success">
 
 							<span class="glyphicon glyphicon-refresh"></span>
-							Atualizar
+							Confirmar
 						</button>
 					</div>
 
@@ -204,18 +201,19 @@
 										id="productRest" 
 										ng-model="newItem.product"
 										ng-options="product.name for product in products" 
-										required >
+										>
 									</select>
 								</div>
 							</td>
 							<td><input 
+								placeholder="Valor"
 								type="text" 
 								ng-model='newItem.product.value|currency:"R$ ":2'
 								class="form-control"
 								disabled
 								name="itemValue" 
 								id="itemValue"
-								required>
+								>
 							<td>								
 								<div class="form-group">
 						        	<div class="input-group">
@@ -225,7 +223,8 @@
 											class="form-control" 
 											name="itemQuantity" 
 											id="itemQuantity" 
-											ng-model="newItem.quantity">
+											ng-model="newItem.quantity"
+											>
 									</div>
 								</div>
 							</td>

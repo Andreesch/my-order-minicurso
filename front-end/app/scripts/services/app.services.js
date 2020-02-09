@@ -61,3 +61,9 @@ appServices.factory('OrderService', ['$resource', function(resource) {
 		delete: {method: 'DELETE'}
 	});
 }]);
+
+appServices.factory('OrderUpdateService', ['$resource', function(resource) {
+	return resource(domainURL + '/order/update', null, {
+		post: { method:'POST'}
+	});
+}]);

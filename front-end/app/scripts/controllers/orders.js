@@ -1,7 +1,7 @@
 'use strict';
 
 angular.module('myOrderApp')
-  .controller('OrdersCtrl', [ '$scope', '$store', 'flash', 'RestaurantListService', 'RestaurantService', 'ProductListService', 'ProductService', 'OrderListService', 'OrderService', 'UserListService', function ($scope, $store, flash, restaurantListService, restaurantService, productListService, productService, orderListService, orderService, userListService) {
+  .controller('OrdersCtrl', [ '$scope', '$store', 'flash', 'RestaurantListService', 'RestaurantService', 'ProductListService', 'ProductService', 'OrderListService', 'OrderService', 'UserListService', 'OrderUpdateService', function ($scope, $store, flash, restaurantListService, restaurantService, productListService, productService, orderListService, orderService, userListService, updateOrderService) {
     
     $scope.orders = [];
     $scope.restaurants = [];
@@ -55,24 +55,41 @@ angular.module('myOrderApp')
         });
       });
 
+      if(items.length == 0) {
+        flash.error = "Não foi informado nenhum item no pedido.";
+        return;
+      }
+
       orderService.post(null, {
         userId: $scope.newOrder.user.id,
         restaurantId: $scope.newOrder.restaurant.id,
-        items: $scope.newOrder.items
+        items: items
       }, function(response){
         flash.success = 'Pedido adicionado com sucesso.';
         // clean scope from newOrder
         $scope.newOrder = {items:[]};
 
-        $scope.loadProducts();
+        $scope.loadOrders();
       }, function(response){
         flash.error = 'Erro ao salvar produto.';
         console.log(response);
       });
     }
 
+    $scope.confirmOrder = function(order) {
+      updateOrderService.post(null, {
+        orderId: order.id,
+        orderStatusEnum: 'CONFIRMED'
+      }, function(response) {
+        flash.success = 'Pedido atualizado com sucesso.';
+        $scope.loadOrders();
+      },function(response) {
+        flash.error = 'Erro ao atualizar pedido.';
+        console.log(response);
+      });
+    }
+
     $scope.addItem = function() {
-      debugger;
       var newItem = {};
       angular.copy($scope.newItem, newItem);
       $scope.newOrder.items.push(newItem);
@@ -86,6 +103,7 @@ angular.module('myOrderApp')
     }
 
     $scope.loadOrders();
+    $scope.loadUsers();
     $scope.loadRestaurants();
     $scope.loadProducts();
 
